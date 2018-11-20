@@ -1,0 +1,98 @@
+<div class="uk-container">
+  <h1 class="uk-h1">بروفايل الأدمين</h1>
+  <hr>
+  <br><br>
+  
+    <div class="uk-position-center">
+      <div class="uk-card uk-card-default">
+        <div class="uk-card-header">
+          <div class="uk-grid-small uk-flex-middle" uk-grid>
+              <div class="uk-width-auto">
+                  <img class="uk-border-circle" width="40" height="40" src="images/avatar.jpg">
+              </div>
+              <div class="uk-width-expand">
+                  <h3 class="uk-card-title uk-margin-remove-bottom">{{fname}} {{lname}}</h3>
+              </div>
+          </div>
+        </div>
+        <div class="uk-card uk-card-body">
+          البريد الالكتروني : {{email}}
+        </div>
+        <div class="uk-card-footer">
+          <button  class="uk-button uk-button-primary uk-margin-small-right" type="button" uk-toggle="target: #modal-example">تحديث</button>  
+          <button  class="uk-button uk-button-success uk-margin-small-right" type="button" uk-toggle="target: #add-admin">اضافة أدمين</button>  
+        </div>
+      </div>
+    </div>
+  <!-- Edit Admin -->
+  <div id="modal-example" uk-modal>
+    <div class="uk-modal-dialog uk-modal-body">
+        <h2 class="uk-modal-title">تحديث المعلومات</h2>
+        <div class="uk-alert-success" uk-alert *ngIf="success">
+          <a class="uk-alert-close" uk-close></a>
+          <p>تم تحديث{{success}}من البيانات</p>
+        </div>
+        <div class="uk-alert-danger" uk-alert *ngIf="unseccess">
+            <a class="uk-alert-close" uk-close></a>
+            <p>تم حذف {{unseccess}} من البيانات</p>
+        </div>
+        <div class="example-container">
+          <div>
+            <div class="uk-column-1-2@s">
+              <mat-form-field>
+                <input matInput type="text" [(ngModel)]="fname" name="fname" autocomplete="false" placeholder="الاسم الأول">
+              </mat-form-field>
+              <mat-form-field>
+                <input matInput type="text" [(ngModel)]="lname" name="lname" autocomplete="false" placeholder="الاسم الثاني">
+              </mat-form-field>
+            </div>
+          </div>
+            <br>
+            <mat-form-field>
+              <input matInput type="text" [(ngModel)]="email" name="email" autocomplete="false" placeholder="بريد الكتروني">
+            </mat-form-field>
+            <br>
+            <mat-form-field>
+              <input matInput type="password" [(ngModel)]="npass" name="npass" placeholder="كلمة السر(الجديدة)">
+            </mat-form-field>
+            <br>
+            <button mat-button color="primary" (click)="updateAdminInfo()">تحديث</button>  
+            <br><br>  
+        </div>     
+    </div>
+  </div>
+
+  <!-- Add admin -->
+  <div id="add-admin" uk-modal>
+    <div class="uk-modal-dialog uk-modal-body">
+        <h2 class="uk-modal-title">اضافة أدمين</h2>
+        <div class="uk-alert-success" uk-alert *ngIf="success">
+          <a class="uk-alert-close" uk-close></a>
+          <p>تمت اضافة{{success}}من البيانات</p>
+        </div>
+        <div class="example-container">
+          <div>
+            <div class="uk-column-1-2@s">
+              <mat-form-field>
+                <input matInput type="text" [(ngModel)]="nfname" name="nfname" autocomplete="false" placeholder="الاسم الأول">
+              </mat-form-field>
+              <mat-form-field>
+                <input matInput type="text" [(ngModel)]="nlname" name="nlname" autocomplete="false" placeholder="الاسم الثاني">
+              </mat-form-field>
+            </div>
+          </div>
+            <br>
+            <mat-form-field>
+              <input matInput type="email" [(ngModel)]="nemail" name="nemail" autocomplete="false" placeholder="بريد الكتروني">
+            </mat-form-field>
+            <br>
+            <mat-form-field>
+              <input matInput type="password" [(ngModel)]="npass" name="npass" placeholder="كلمة السر">
+            </mat-form-field>
+            <br>
+            <button mat-button color="primary" (click)="insertAdmin()">اضافة</button> 
+            <br><br>  
+        </div>     
+    </div>
+  </div>
+</div>

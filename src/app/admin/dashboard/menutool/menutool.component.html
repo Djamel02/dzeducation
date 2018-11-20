@@ -1,0 +1,40 @@
+<mat-toolbar color="primary">
+  
+    <mat-toolbar-row class="ltr">
+        <!-- for admin -->
+        <button mat-icon-button [matMenuTriggerFor]="admin" title="profile">
+          <mat-icon>person</mat-icon>
+        </button>
+        <mat-menu #admin="matMenu">
+          <button mat-menu-item disabled>
+            <span>{{email}}</span>
+          </button>
+          <button mat-menu-item (click)="logout()">
+            <mat-icon>settings_power</mat-icon>
+            <span>تسجيل الخروج</span>
+          </button>
+        </mat-menu>
+        <!-- for inbox -->
+        <button mat-icon-button [matMenuTriggerFor]="inbox" title="inbox">
+          <mat-icon>comment</mat-icon><span class="uk-badge">1</span>
+        </button>
+        <mat-menu #inbox="matMenu">
+          <div mat-menu-item class="uk-margin-small uk-card uk-card-default uk-card-body">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+          </div>
+          <div mat-menu-item class="uk-margin-small uk-card uk-card-default uk-card-body">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+          </div>
+        </mat-menu>
+        <div class="uk-margin-right"></div>
+        <div class="uk-margin-right"></div>
+      <!-- for search form -->
+      <button mat-flat-button color="primary">
+          <mat-icon>search</mat-icon>
+      </button>
+      <mat-form-field id="search">
+        <input matInput placeholder="بحث ...">
+      </mat-form-field>
+    </mat-toolbar-row>
+  </mat-toolbar>
+  

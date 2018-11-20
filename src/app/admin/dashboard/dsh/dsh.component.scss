@@ -1,0 +1,75 @@
+.uk-container{
+    padding-top: 10px;
+}
+.card{
+    display: inline-block;
+    position: relative;
+    min-width: 250px;
+    width: 100%;
+    margin: 25px 0;
+    box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.14);
+    border-radius: 6px;
+    color: rgba(0,0,0, 0.87);
+    background: #fff;
+    z-index: 3;
+    .card-footer{
+        margin: 0 20px 10px;
+        padding-top: 10px;
+        border-top: 1px solid #eeeeee;
+    }
+    .card-header {
+        float: right;
+        text-align: center;
+        background: linear-gradient(60deg, #66bb6a, #43a047);
+        box-shadow: 0 4px 20px 0px rgba(0, 0, 0, 0.14), 0 7px 10px -5px rgba(76, 175, 80, 0.4);
+        margin: -20px 15px 0;
+        border-radius: 3px;
+        padding: 15px;
+        position: relative;
+        .fa{
+            font-size: 40px;
+            color: #ffffff;
+        }
+    }
+    .card-content{
+        padding: 15px 20px;
+        position: relative;
+        text-align: left;
+        padding-top: 10px;
+        .category{
+            margin: 0 0 10px;
+        }
+    }
+}
+.uk-h1, .uk-h2, .uk-h3, .uk-h4, .uk-h5, .uk-h6, h1, h2, h3, h4, h5, h6 {
+    font-family: georgia, sans-serif;
+}
+
+    .example-container {
+        height: 400px;
+        max-width: 550px;
+        min-width: 270px;
+        overflow: auto;
+    }
+    
+    table {
+        width: 800px;
+    }
+    
+    td.mat-column-star {
+        width: 20px;
+        padding-right: 8px;
+    }
+    
+    th.mat-column-position, td.mat-column-position {
+        padding-left: 8px;
+    }
+    
+    .mat-table-sticky:first-child {
+        border-right: 1px solid #e0e0e0;
+    }
+    
+    .mat-table-sticky:last-child {
+        border-left: 1px solid #e0e0e0;
+    }
+    

@@ -1,0 +1,20 @@
+<div class="uk-container uk-container-small">
+  <div class="example-container">
+    <div class="header">
+      <h1 class="uk-text-center">تسجيل الدخول</h1>
+    </div>
+    <br>
+      <mat-form-field>
+        <input matInput type="text" [(ngModel)]="email" name="email" required autocomplete="off" placeholder="بريد الكتروني">
+      </mat-form-field>
+      <br>
+      <mat-form-field>
+        <input matInput type="password" [(ngModel)]="pass" name="pass" required placeholder="كلمة السر">
+      </mat-form-field>
+      <br>
+      <a class="uk-text-center">هل نسيت كلمة السر؟</a>
+      <br>
+      <button mat-button color="primary" (click)="getAdmin(email,pass)">التسجيل</button>  
+      <br><br>  
+  </div>     
+</div>

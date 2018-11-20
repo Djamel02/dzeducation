@@ -1,0 +1,233 @@
+<div class="uk-container">
+  <h1 class="uk-h1">مدرسة اللغات</h1>
+  <hr>
+  <br><br>
+  <section>
+    <div class="uk-column-1-2@s uk-column-1-3@m">
+        <!-- Start Add Language -->
+        <div class="card">
+          <div class="card-header">
+              <button href="#toggle-animation" class="uk-button uk-button-default" type="button" uk-toggle="target: #lang; animation: uk-animation-fade">اضافة لغة</button>
+          </div>
+          <div id="lang">
+            <form>
+              <div class="card-content">
+                <mat-form-field>
+                  <input matInput type="text" [(ngModel)]="langName" required name="langName" placeholder="اسم اللغة">
+                </mat-form-field>
+                <br>
+              </div>
+              <div class="card-footer">
+                <button mat-button color="primary" (click)="addLang()">اضافة اللغة</button>
+              </div>
+            </form>
+          </div>
+        </div>
+        <!-- End Add Language -->
+        <!-- Start Add Videos -->  
+        <div class="card">
+          <div class="card-header">
+              <button href="#toggle-animation" class="uk-button uk-button-default" type="button" uk-toggle="target: #video; animation: uk-animation-fade">اضافة فيديو</button>
+          </div>
+          <div id="video">
+            <form>
+              <div class="card-content">
+                <mat-form-field>
+                  <mat-select name="langv" [(ngModel)]="langv" placeholder="اختر اللغة">
+                    <mat-option *ngFor="let lang of languages" [value]="lang.idLanguage">
+                      {{lang.language_name}}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+                <br>
+                <mat-form-field>
+                  <input matInput type="text" required [(ngModel)]="title" name="title" placeholder="العنوان">
+                </mat-form-field>
+                <br>
+                <mat-form-field>
+                  <input matInput type="text" required [(ngModel)]="link" name="link" placeholder="رابط الفيديو">
+                </mat-form-field>
+                <br>
+              </div>
+              <div class="card-footer">
+                <button mat-button color="primary" (click)="addVideo()">اضافة الفيديو</button>
+              </div>
+            </form>
+          </div>
+        </div>
+        <!-- End Add Video -->
+        <!-- Start Add steps -->
+        <div class="card">
+          <div class="card-header">
+            <button href="#toggle-animation" class="uk-button uk-button-default" type="button" uk-toggle="target: #set; animation: uk-animation-fade">اضافة خطوات تعلم</button>
+          </div>
+          <div id="set">
+            <div class="card-content">
+              <mat-form-field>
+                <mat-select name="langv" [(ngModel)]="langv" placeholder="اختر اللغة">
+                  <mat-option *ngFor="let lang of languages" [value]="lang.idLanguage">
+                    {{lang.language_name}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+              <br>
+            </div>
+            <div class="card-footer">
+              <button  class="uk-button uk-button-success uk-margin-small-right" type="button" uk-toggle="target: #steps">اضافة خطوات تعلم</button>  
+            </div>
+          </div>
+        </div>
+        <!-- End Add steps -->
+            <!-- Add steps modal -->
+            <div id="steps" uk-modal>
+                <div class="uk-modal-dialog uk-modal-body">
+                    <h2 class="uk-modal-title">خطوات تعلم لغة</h2>
+                    <div class="example-container">
+                        <br>
+                        <form>
+                          <mat-form-field>
+                            <input matInput type="text" [(ngModel)]="titles" required name="titles" autocomplete="false"  placeholder="العنوان">
+                          </mat-form-field>
+                          <br>
+                          <mat-form-field >
+                            <textarea matInput [(ngModel)]="article" required name="article" placeholder="الخطوات :" ></textarea>
+                          </mat-form-field>
+                          <br>
+                          <button mat-button color="primary" (click)="addSteps()">اضافة المقالة</button>
+                        </form>  
+                        <br><br>  
+                    </div>     
+                </div>
+              </div>
+              <!-- End steps modal -->
+      </div>
+  </section>
+  <section>
+    <!-- Start tables work -->
+    <div class="uk-column-1-2@s">
+      <!-- Start Languages table -->
+      <div class="card">
+        <div class="card-header">
+          <h4 class="uk-text-center">جدول اللغات الموجودة</h4> 
+        </div>
+          <div class="card-content">
+            <div class="uk-overflow-auto">
+              <table class="uk-table uk-table-small uk-table-divider">
+                  <thead>
+                      <tr>
+                        <th>#</th>
+                        <th>اللغة</th>
+                        <th>  </th>
+                      </tr>
+                  </thead>
+                  <tbody>
+                      <tr *ngFor="let lang of languages">
+                        <td>{{lang.idLanguage}}</td>
+                        <td>{{lang.language_name}}</td>
+                        <td>
+                          <button class="uk-button uk-margin-small-right uk-button-primary" (click)="showModal(lang.idLanguage)">تحديث</button> 
+                        </td>
+                      </tr>
+                  </tbody>
+              </table>
+          </div>
+            <br>
+          </div>
+      </div>
+      <!-- End Languages table -->
+
+      <!-- Start Videos table -->
+      <div class="card">
+        <div class="card-header">
+          <h4 class="uk-text-center">الفيديوهات</h4> 
+        </div>
+          <div class="card-content">
+            <div class="uk-overflow-auto">
+              <table class="uk-table uk-table-small uk-table-divider">
+                  <thead>
+                      <tr>
+                        <th>#</th>
+                        <th>اللغة</th>
+                        <th> العنوان </th>
+                        <th>  </th>
+                      </tr>
+                  </thead>
+                  <tbody>
+                      <tr *ngFor="let video of videos">
+                        <td>{{video.idVideo}}</td>
+                        <td>{{video.language_name}}</td>
+                        <td>{{video.video_title}}</td>
+                        <td>
+                          <button class="uk-button uk-margin-small-right uk-button-primary" (click)="showModalVideo(video.idVideo)">تعديل</button>
+                        </td>
+                      </tr>
+                  </tbody>
+              </table>
+          </div>
+            <br>
+          </div>
+      </div>
+      <!-- End Videos table -->
+    </div>
+
+      <!-- Start Steps table -->  
+      <div class="card">
+        <div class="card-header">
+          <h4 class="uk-text-center"></h4> 
+        </div>
+          <div class="card-content">
+            
+            <br>
+          </div>
+      </div>
+      <!-- End Steps table -->
+    <!-- Update Language modal -->
+    <div id="update-lang" uk-modal>
+      <div class="uk-modal-dialog uk-modal-body">
+          <h2 class="uk-modal-title"> تعديل لغة</h2>
+          <div class="example-container">
+              <br>
+              <form>
+                <mat-form-field>
+                  <input matInput type="text" [(ngModel)]="lang_name" required name="lang_name" autocomplete="false"  placeholder="اسم اللغة">
+                </mat-form-field>
+                <br>
+                <button mat-button color="primary" (click)="updateLang()">تعديل</button>
+              </form>  
+              <br><br>  
+          </div>     
+      </div>
+    </div>
+    <!-- End Language modal -->
+    <!-- Update Videos modal -->
+    <div id="update-video" uk-modal>
+      <div class="uk-modal-dialog uk-modal-body">
+          <h2 class="uk-modal-title"> تعديل فيديو</h2>
+          <div class="example-container">
+              <br>
+              <form *ngFor="let vi of video">
+                  <select name="lang_v" class="uk-select" [(ngModel)]="lang_v" >
+                    <option *ngFor="let lang of languages" [value]="lang.idLanguage">
+                      {{lang.language_name}}
+                    </option>
+                  </select>
+
+                <br>
+                  <input class="uk-input" type="text" required [(ngModel)]="vi.video_title" name="vi.video_title" placeholder="العنوان">
+                <br>
+                  <input class="uk-input" type="text" required [(ngModel)]="vi.video_link" name="vi.video_link" placeholder="رابط الفيديو">
+                <br>
+                <button mat-button color="primary" (click)="updateVideo(vi.video_title,vi.video_link)">تعديل</button>
+                <button mat-button color="accent" (click)="deleteVideo()">حذف</button>
+              </form>  
+              <br><br>  
+          </div>     
+      </div>
+    </div>
+    <!-- End Videos modal -->
+  </section>
+
+  </div>
+  
+  
+

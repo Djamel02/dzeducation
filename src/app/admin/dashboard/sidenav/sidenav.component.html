@@ -1,0 +1,25 @@
+<mat-sidenav-container class="app-sidenav-container">
+  <mat-sidenav class="app-sidenav mat-elevation-z10"  mode="over" #sidenav>
+    <mat-toolbar color="primary">اسم الموقع</mat-toolbar>
+    <mat-list>
+      <div *ngFor="let li of listItem">
+        <a routerLink="{{li.link}}">
+        <mat-list-item >
+          <i class="material-icons"> {{li.icon}} </i>
+          {{li.title}}
+        </mat-list-item>
+      </a>
+      </div>
+    </mat-list>
+  </mat-sidenav>
+  <div class="app-content">
+    <div class="app-sidenav-content">
+      <app-menutool class="row-9"></app-menutool>
+    </div>
+    <div class="subapp">
+      <a (click)="sidenav.toggle()" uk-icon="chevron-right" color="primary" class="row-1"></a>
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+  
+</mat-sidenav-container>
