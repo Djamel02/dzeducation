@@ -1,7 +1,3 @@
-<div class="uk-container">
-  <h1 class="uk-h1">مدرسة اللغات</h1>
-  <hr>
-  <br><br>
   <section>
     <div class="uk-column-1-2@s uk-column-1-3@m">
         <!-- Start Add Language -->
@@ -143,27 +139,42 @@
         </div>
           <div class="card-content">
             <div class="uk-overflow-auto">
-              <table class="uk-table uk-table-small uk-table-divider">
-                  <thead>
-                      <tr>
-                        <th>#</th>
-                        <th>اللغة</th>
-                        <th> العنوان </th>
-                        <th>  </th>
-                      </tr>
-                  </thead>
-                  <tbody>
-                      <tr *ngFor="let video of videos">
-                        <td>{{video.idVideo}}</td>
-                        <td>{{video.language_name}}</td>
-                        <td>{{video.video_title}}</td>
-                        <td>
-                          <button class="uk-button uk-margin-small-right uk-button-primary" (click)="showModalVideo(video.idVideo)">تعديل</button>
-                        </td>
-                      </tr>
-                  </tbody>
-              </table>
-          </div>
+              <div class="mat-elevation-z8">
+                  <table mat-table [dataSource]="videos">
+                
+                    <!-- ID Column -->
+                    <ng-container matColumnDef="#">
+                      <th mat-header-cell *matHeaderCellDef> # </th>
+                      <td mat-cell *matCellDef="let element"> {{element.idVideo}} </td>
+                    </ng-container>
+                
+                    <!-- language name Column -->
+                    <ng-container matColumnDef="اللغة">
+                      <th mat-header-cell *matHeaderCellDef> اللغة </th>
+                      <td mat-cell *matCellDef="let element"> {{element.language_name}} </td>
+                    </ng-container>
+                
+                    <!-- video title Column -->
+                    <ng-container matColumnDef="عنوان الفيديو">
+                      <th mat-header-cell *matHeaderCellDef> عنوان الفيديو </th>
+                      <td mat-cell *matCellDef="let element"> {{element.video_title}} </td>
+                    </ng-container>
+
+                    <!-- video title Column -->
+                    <ng-container matColumnDef="تعديل">
+                      <th mat-header-cell *matHeaderCellDef>  </th>
+                      <td mat-cell *matCellDef="let element">
+                         <button class="uk-button uk-button-primary" (click)="showModalVideo(element.idVideo)">تعديل</button> 
+                      </td>
+                    </ng-container>
+                
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                  </table>
+                
+                  <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+                </div>    
+              </div>            
             <br>
           </div>
       </div>
@@ -227,7 +238,6 @@
     <!-- End Videos modal -->
   </section>
 
-  </div>
   
   
 

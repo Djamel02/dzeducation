@@ -74,11 +74,11 @@ export class ServiceService {
         link:link,
         idlang:idlang
       }
-      return this._http.put('/api/videos/'+id,video);
+      return this._http.patch('/api/videos/'+id,video);
     }
     //Delete Video
     deleteVideo(id){
-      return this._http.delete('/api/videos/'+id)
+      return this._http.delete('/api/video/'+id)
     }
   /* End Videos Works */
   /* Steps Works */

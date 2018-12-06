@@ -66,11 +66,11 @@ router.get('/videos/:id',(req,res) =>{
     db.getVideoById(req.params.id,res)
 })
 //Delete video
-router.delete('/videos/:id',(req,res) =>{
-    db.deleteVideo(req.params.id,res);
+router.delete('/video/:id',(req,res) =>{
+    db.deleteVideo(req.params.id,res)
 })
 //Update video
-router.put('/videos/:id',(req,res)=>{
+router.patch('/videos/:id',(req,res)=>{
     let video = req.body
     db.updateVideo(req.params.id,video.title,video.link,video.idlang,res)
 })

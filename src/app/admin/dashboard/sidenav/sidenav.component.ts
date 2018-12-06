@@ -7,6 +7,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./sidenav.component.scss']
 })
 export class SidenavComponent implements OnInit {
+  header = 'لوحة التحكم'
   listItem:Array<Object> = [
     {
       title:"لوحة التحكم" ,
@@ -42,6 +43,9 @@ export class SidenavComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
+  }
+  setHeader(i){
+    this.header = this.listItem[i]['title'];
   }
 
 }

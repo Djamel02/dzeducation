@@ -1,6 +1,4 @@
-.uk-container{
-    padding-top: 10px;
-}
+
 .card{
     display: inline-block;
     position: relative;
@@ -14,6 +12,7 @@
     z-index: 3;
     .card-header{
         align-items: center;
+        padding: 10px 0;
         button{
             width: 100%;
         }
@@ -46,4 +45,7 @@
     button{
         width: 100px
     }
+}
+table{
+    width: 100%
 }

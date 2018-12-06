@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ServiceService } from 'src/app/service.service';
 import { Router } from '@angular/router';
+import {MatPaginator} from '@angular/material';
 declare var UIkit:any;
 @Component({
   selector: 'app-languages',
@@ -8,6 +9,11 @@ declare var UIkit:any;
   styleUrls: ['./languages.component.scss']
 })
 export class LanguagesComponent implements OnInit {
+  //
+  displayedColumns: string[] = ['#', 'اللغة', 'عنوان الفيديو','تعديل'];
+  dataSource :any
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+  //
   langName:string;
   title:string;
   link:string;
@@ -25,6 +31,52 @@ export class LanguagesComponent implements OnInit {
   ngOnInit() {
     this.getLanguages();
     this.getVideos()
+  }
+
+  
+  //get All videos
+  getVideos(){
+    this.data.getVideos().subscribe(res =>{
+      this.videos = res.json().data;
+      this.videos.paginator = this.paginator
+    })
+    
+  }
+  //Add videos
+  addVideo(){
+    let video ={
+      idLang:this.langv.valueOf(),
+      title:this.title,
+      link:this.link
+    }
+    this.data.addVideo(video).subscribe(res => {
+      if(res.json().data.affectedRows > 0){
+        this.successNotification(`تمت اضافة  ${this.title}`)
+        this.title = '';
+        this.link = '';
+        this.router.navigateByUrl('./')
+      }else{
+        this.errorNotification()
+      }
+    })
+  }
+
+  //Add steps 
+  addSteps(){
+    let Steps = {
+      idLang:this.langv.valueOf(),
+      title:this.titles,
+      article:this.article
+    }
+    this.data.addSteps(Steps).subscribe(res => {
+      if(res.json().data.affectedRows > 0){
+        this.successNotification(`تمت اضافة  ${this.titles}`)
+        this.titles = '';
+        this.article = '';
+      }else{
+        this.errorNotification();
+      }
+    })
   }
   //Add language
   addLang(){
@@ -46,50 +98,6 @@ export class LanguagesComponent implements OnInit {
       this.languages = res.json().data;
     })
   }
-  //get All videos
-  getVideos(){
-    this.data.getVideos().subscribe(res =>{
-      this.videos = res.json().data;
-    })
-  }
-  //Add videos
-  addVideo(){
-    let video ={
-      idLang:this.langv.valueOf(),
-      title:this.title,
-      link:this.link
-    }
-    this.data.addVideo(video).subscribe(res => {
-      if(res.json().data.affectedRows > 0){
-        this.successNotification(`تمت اضافة  ${this.title}`)
-        this.title = '';
-        this.link = '';
-        this.router.navigateByUrl('./')
-      }else{
-        this.errorNotification()
-      }
-    })
-    
-  }
-
-  //Add steps 
-  addSteps(){
-    let Steps = {
-      idLang:this.langv.valueOf(),
-      title:this.titles,
-      article:this.article
-    }
-    this.data.addSteps(Steps).subscribe(res => {
-      if(res.json().data.affectedRows > 0){
-        this.successNotification(`تمت اضافة  ${this.titles}`)
-        this.titles = '';
-        this.article = '';
-      }else{
-        this.errorNotification();
-      }
-    })
-  }
-
   //Update language
   updateLang(){
     this.data.updateLanguage(this.id,this.lang_name).subscribe(res =>{
@@ -102,17 +110,25 @@ export class LanguagesComponent implements OnInit {
       }
     })
   }
+  //Show modal languages
+  showModal(id){
+    this.id = id;
+    this.data.getLanguageById(id).subscribe(res =>{
+      this.lang_name = res.json().data[0].language_name
+    })
+    UIkit.modal('#update-lang').show();
+  }
 
   //Delete video
   deleteVideo(){
+    console.log(this.id)
     this.data.deleteVideo(this.id).subscribe(res => {
-      if(res.json().data.affectedRows > 0){
+        if(res.json().data.affectedRows > 0){
         this.getVideos();
         UIkit.modal('#update-video').hide();
         this.successNotification('تم الحذف بنجاح')
-        
       }else {
-        this.errorNotification();
+        this.errorNotification(' '+res.json().data.affectedRows);
       }
     })
   }
@@ -130,16 +146,6 @@ export class LanguagesComponent implements OnInit {
       }
     })
   }
-
-  //Show modal languages
-  showModal(id){
-    this.id = id;
-    this.data.getLanguageById(id).subscribe(res =>{
-      this.lang_name = res.json().data[0].language_name
-    })
-    UIkit.modal('#update-lang').show();
-  }
-
   //Show modal videos
   showModalVideo(id){
     this.id = id;
@@ -151,7 +157,6 @@ export class LanguagesComponent implements OnInit {
     })
     
   }
-
   //successnotification
   successNotification(message){
     UIkit.notification({
@@ -162,9 +167,10 @@ export class LanguagesComponent implements OnInit {
     });
   }
   //errror notification
-  errorNotification(){
+  errorNotification(message ?){
+    var msg = message ? message : '';
     UIkit.notification({
-      message: 'خطأ !',
+      message: msg+' خطأ !',
       status: 'warning',
       pos: 'top-center',
       timeout: 2000

@@ -1,8 +1,0 @@
-{
-    "name":"dzeducation",
-    "description":"algerian website for helpin students",
-    "repository":"https://github.com/Djamel02/Smartmind/",
-    "logo":"http://node-js-samle.herokuapp.com/node.svg",
-    "keywords":["node","mysql","angular","express"],
-    "image":"heroku/nodejs"
-}

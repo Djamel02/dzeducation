@@ -367,8 +367,8 @@ module.exports = class ADL {
         });
     }
     //Delete videos
-    deleteVideo(idvideo,res){
-        return this.connection.query(`DELETE FROM videos WHERE idVideo = ?`,idvideo,(err,result) =>{
+     deleteVideo(idVideo,res) {
+        return this.connection.query(`DELETE FROM videos WHERE idVideo = ? `, idVideo,(err,result) =>{
             try {
                 this.response.data = result
                 res.json(this.response)
@@ -404,7 +404,7 @@ module.exports = class ADL {
         })
     }
     //Update steps
-    updateVideo(idStep,title,article,idlang,res){
+    updateStep(idStep,title,article,idlang,res){
         return this.connection.query('UPDATE steps SET step_title = ?,step_article = ?,idLanguage = ?  WHERE idStep = ? ',[title,article,idlang,idStep],(err,result) =>{
             try {
                 this.response.data = result
@@ -416,7 +416,7 @@ module.exports = class ADL {
         });
     }
     //Delete steps
-    deleteVideo(idStep,res){
+    deleteStep(idStep,res){
         return this.connection.query(`DELETE FROM steps WHERE idStep = ?`,idStep,(err,result) =>{
             try {
                 this.response.data = result

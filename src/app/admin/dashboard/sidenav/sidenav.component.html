@@ -2,8 +2,8 @@
   <mat-sidenav class="app-sidenav mat-elevation-z10"  mode="over" #sidenav>
     <mat-toolbar color="primary">اسم الموقع</mat-toolbar>
     <mat-list>
-      <div *ngFor="let li of listItem">
-        <a routerLink="{{li.link}}">
+      <div *ngFor="let li of listItem; let i = index">
+        <a routerLink="{{li.link}}" (click)="setHeader(i)">
         <mat-list-item >
           <i class="material-icons"> {{li.icon}} </i>
           {{li.title}}
@@ -18,7 +18,14 @@
     </div>
     <div class="subapp">
       <a (click)="sidenav.toggle()" uk-icon="chevron-right" color="primary" class="row-1"></a>
-      <router-outlet></router-outlet>
+      <div class="uk-container">
+        <div class="header">
+            <h1 class="uk-h1">{{header}}</h1>
+            <hr>
+        </div>
+        <br><br><br>
+        <router-outlet></router-outlet>
+      </div>
     </div>
   </div>
   
