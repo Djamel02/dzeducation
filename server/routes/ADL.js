@@ -110,7 +110,7 @@ module.exports = class ADL {
     }
     //Create stage
     createStage(stageName,res){
-        return this.connection.query('INSERT INTO stages (stage_name) values(?)',stageName,(err,result) =>{
+        return this.connection.query('INSERT INTO stages (stage_name) values(?)',[stageName],(err,result) =>{
             try {
                 this.response.data = result
                 res.json(this.response)
@@ -138,8 +138,8 @@ module.exports = class ADL {
     /* End Stage data */
     /* Start Years data */
     //Get Years
-    getYear(res){
-        return this.connection.query('SELECT * FROM years',(err,result) =>{
+    getYear(idStage,res){
+        return this.connection.query(`SELECT * FROM years WHERE idStage = ${idStage} `,(err,result) =>{
             try {
                 this.response.data = result
                 res.json(this.response)
@@ -149,8 +149,8 @@ module.exports = class ADL {
         })
     }
     //Create year
-    createYear(yearName,res){
-        return this.connection.query('INSERT INTO years (year_name) values(?)',yearName,(err,result) =>{
+    createYear(yearName,idStage,res){
+        return this.connection.query('INSERT INTO years (year_name,idStage) values(?,?)',[yearName,idStage],(err,result) =>{
             try {
                 this.response.data = result
                 res.json(this.response)
@@ -189,8 +189,8 @@ module.exports = class ADL {
         })
     }
     //Create Fields
-    createField(fieldName,res){
-        return this.connection.query('INSERT INTO fields (field_name) values(?)',fieldName,(err,result) =>{
+    createField(fieldName,idyear,res){
+        return this.connection.query('INSERT INTO fields (field_name,idYear) values(?,?)',[fieldName,idyear],(err,result) =>{
             try {
                 this.response.data = result
                 res.json(this.response)
@@ -218,8 +218,8 @@ module.exports = class ADL {
     /* End Fields data */
     /* Start Modules data */
     //Get Modules
-    getFields(res){
-        return this.connection.query('SELECT * FROM fields',(err,result) =>{
+    getModules(res){
+        return this.connection.query('SELECT * FROM modules',(err,result) =>{
             try {
                 this.response.data = result
                 res.json(this.response)
@@ -229,8 +229,8 @@ module.exports = class ADL {
         })
     }
     //Create Modules
-    createField(fieldName,res){
-        return this.connection.query('INSERT INTO fields (field_name) values(?)',fieldName,(err,result) =>{
+    createModules(moduleName,res){
+        return this.connection.query('INSERT INTO modules (module_name) values(?)',fieldName,(err,result) =>{
             try {
                 this.response.data = result
                 res.json(this.response)
@@ -241,8 +241,8 @@ module.exports = class ADL {
         })
     }
     //Update Modules
-    updateField(idField,fieldName,res){
-        return this.connection.query('UPDATE fields SET field_name = ?  WHERE idField = ? ',[fieldName,idField],(err,result) =>{
+    updateModules(idModule,moduleName,res){
+        return this.connection.query('UPDATE modules SET module_name = ?  WHERE idModule = ? ',[moduleName,idModule],(err,result) =>{
             try {
                 this.response.data = result
                 res.json(this.response)
@@ -254,7 +254,7 @@ module.exports = class ADL {
     }
     //Delete Modules
     //TODO
-    deleteField(idField,res){}
+    deleteModules(idModule,res){}
     /* End Fields data */
     /* Start Languages data */
     //get All languages

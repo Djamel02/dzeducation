@@ -1,3 +1,108 @@
-<p>
-  status works!
-</p>
+<section>
+  <div class="uk-column-1-2@s uk-column-1-3@m">
+    <!-- Start Add Stage -->
+    <div class="card">
+      <div class="card-header">
+          <button href="#toggle-animation" class="uk-button uk-button-default" type="button" uk-toggle="target: #stage; animation: uk-animation-fade">اضافة طور</button>
+      </div>
+      <div id="stage">
+        <form>
+          <div class="card-content">
+            <mat-form-field>
+              <input matInput type="text" [(ngModel)]="stageName" required name="stageName" placeholder="اسم الطور">
+            </mat-form-field>
+            <br>
+          </div>
+          <div class="card-footer">
+            <button mat-button color="primary" (click)="addStage()">اضافة الطور</button>
+          </div>
+        </form>
+      </div>
+    </div>
+    <!-- End Add Stage -->
+    <!-- Start Add Videos -->  
+    <div class="card">
+      <div class="card-header">
+          <button href="#toggle-animation" class="uk-button uk-button-default" type="button" uk-toggle="target: #year; animation: uk-animation-fade">اضافة سنة</button>
+      </div>
+      <div id="year">
+        <form>
+          <div class="card-content">
+            <mat-form-field>
+              <mat-select name="idStage" [(ngModel)]="idStage" placeholder="اختر الطور">
+                <mat-option *ngFor="let stage of allStages" [value]="stage.idStage">
+                  {{stage.stage_name}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+            <br>
+            <mat-form-field>
+              <input matInput type="text" required [(ngModel)]="yearName" name="yearName" placeholder="اسم السنة">
+            </mat-form-field>
+            <br>
+          </div>
+          <div class="card-footer">
+            <button mat-button color="primary" (click)="addYear()">اضافة سنة</button>
+          </div>
+        </form>
+      </div>
+    </div>
+    <!-- End Add Video -->
+    <!-- Start Add steps -->
+    <div class="card">
+      <div class="card-header">
+        <button href="#toggle-animation" class="uk-button uk-button-default" type="button" uk-toggle="target: #field; animation: uk-animation-fade">اضافة شعبة</button>
+      </div>
+      <div id="field">
+        <div class="card-content">
+          <mat-form-field>
+            <mat-select name="idStage" [(ngModel)]="idStage" (ngModelChange)="getYears(idStage)" placeholder="اختر الطور">
+              <mat-option *ngFor="let stage of allStages" [value]="stage.idStage">
+                {{stage.stage_name}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+          <br>
+          <mat-form-field>
+            <mat-select name="idYear" [(ngModel)]="idYear"  placeholder="اختر السنة">
+              <mat-option *ngFor="let year of allYears" [value]="year.idYear">
+                {{year.year_name}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+          <br>
+          <mat-form-field>
+            <input matInput type="text" required [(ngModel)]="fieldName" name="fieldName" placeholder="اسم الشعبة">
+          </mat-form-field>
+          <br>
+        </div>
+        <div class="card-footer">
+          <button  class="uk-button uk-button-success uk-margin-small-right" type="button" (click)="addField()">اضافة شعبة</button>  
+        </div>
+      </div>
+    </div>
+    <!-- End Add steps -->
+        <!-- Add steps modal -->
+        <div id="steps" uk-modal>
+            <div class="uk-modal-dialog uk-modal-body">
+                <h2 class="uk-modal-title">خطوات تعلم لغة</h2>
+                <div class="example-container">
+                    <br>
+                    <form>
+                      <mat-form-field>
+                        <input matInput type="text" [(ngModel)]="titles" required name="titles" autocomplete="false"  placeholder="العنوان">
+                      </mat-form-field>
+                      <br>
+                      <mat-form-field >
+                        <textarea matInput [(ngModel)]="article" required name="article" placeholder="الخطوات :" ></textarea>
+                      </mat-form-field>
+                      <br>
+                      <button mat-button color="primary" (click)="addSteps()">اضافة المقالة</button>
+                    </form>  
+                    <br><br>  
+                </div>     
+            </div>
+          </div>
+          <!-- End steps modal -->
+  </div>
+</section>

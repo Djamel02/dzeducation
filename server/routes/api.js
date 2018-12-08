@@ -79,4 +79,29 @@ router.post('/videos',(req,res)=>{
     video = req.body
     db.addVideo(video.title,video.link,video.idLang,res)
 })
+
+//get stages
+router.get('/stages',(req,res) =>{
+    db.getStage(res)
+})
+//Add stage
+router.post('/stage',(req,res) =>{
+    db.createStage(req.body[0],res);
+})
+
+//get Years
+router.get('/years/:id',(req,res) =>{
+    db.getYear(req.params.id,res)
+})
+//Add year
+router.post('/year',(req,res) =>{
+    year = req.body
+    db.createYear(year.yearName,year.idStage,res);
+})
+
+//Add field
+router.post('/field',(req,res)=>{
+    field = req.body;
+    db.createField(field.fieldName,field.idYear,res)
+})
 module.exports = router;

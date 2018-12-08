@@ -86,4 +86,33 @@ export class ServiceService {
     return this._http.post('/api/steps',Steps)
   }
   /* End Steps Works */
+  /* Start Stages works */
+    //get stages
+    getStages(){
+      return this._http.get('/api/stages')
+    }
+    //add stage
+    addStage(stageName){
+      return this._http.post('/api/stage',[stageName]);
+    }
+
+  /* Start Stages works */
+  /* Start years works */
+    //get year by id stage
+    getYears(idStage){
+      return this._http.get('/api/years/'+idStage);
+    }
+    //add year
+    addYear(year){
+      return this._http.post('/api/year',year)
+    }
+  /* End years works */
+  /* Start Fields works */
+    //Add field
+    addField(field){
+      var headers= new Headers();
+      headers.append('Content-type','application/json');
+      return this._http.post('/api/field',field);
+    }
+  /* Start Fields works */
 }
