@@ -108,6 +108,10 @@ export class ServiceService {
     }
   /* End years works */
   /* Start Fields works */
+    //get field
+    getField(idyear){
+      return this._http.get('/api/fields/'+idyear);
+    }
     //Add field
     addField(field){
       var headers= new Headers();
@@ -115,4 +119,26 @@ export class ServiceService {
       return this._http.post('/api/field',field);
     }
   /* Start Fields works */
+  /*Start Module Works */
+    //get modules
+    getModules(idfield){
+      return this._http.get('/api/modules/'+idfield)
+    }
+    //add module
+    addModule(modul){
+      return this._http.post('/api/module',modul)
+    }
+  /*End Modules works */
+  /*Start subjects works */
+    //add subject
+    addSubject(subject){
+      return this._http.post('/api/subject',subject);
+    }
+  /*End Subjects works */
+  /*Start Lessons works */
+    //add lesson
+    addLesson(lesson){
+      return this._http.post('/api/lesson',lesson);
+    }
+  /*End Lessons works */
 }

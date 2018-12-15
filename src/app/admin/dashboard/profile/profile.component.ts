@@ -19,7 +19,7 @@ export class ProfileComponent implements OnInit {
   nemail='';
   success:string = null;
   unseccess = false;
-  constructor(private data:ServiceService) {
+  constructor(private data:ServiceService ) {
     this.email = JSON.parse(localStorage.getItem('admin')).email
     this.pass = JSON.parse(localStorage.getItem('admin')).password
     data.getAdmins(this.email,this.pass).subscribe(res =>{

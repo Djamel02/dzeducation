@@ -5,7 +5,7 @@
       <div class="card-header">
           <button href="#toggle-animation" class="uk-button uk-button-default" type="button" uk-toggle="target: #stage; animation: uk-animation-fade">اضافة طور</button>
       </div>
-      <div id="stage">
+      <div id="stage" aria-hidden="true" hidden="">
         <form>
           <div class="card-content">
             <mat-form-field>
@@ -20,12 +20,12 @@
       </div>
     </div>
     <!-- End Add Stage -->
-    <!-- Start Add Videos -->  
+    <!-- Start Add year -->  
     <div class="card">
       <div class="card-header">
           <button href="#toggle-animation" class="uk-button uk-button-default" type="button" uk-toggle="target: #year; animation: uk-animation-fade">اضافة سنة</button>
       </div>
-      <div id="year">
+      <div id="year" aria-hidden="true" hidden="">
         <form>
           <div class="card-content">
             <mat-form-field>
@@ -47,13 +47,13 @@
         </form>
       </div>
     </div>
-    <!-- End Add Video -->
-    <!-- Start Add steps -->
+    <!-- End Add year -->
+    <!-- Start Add field -->
     <div class="card">
       <div class="card-header">
         <button href="#toggle-animation" class="uk-button uk-button-default" type="button" uk-toggle="target: #field; animation: uk-animation-fade">اضافة شعبة</button>
       </div>
-      <div id="field">
+      <div id="field" aria-hidden="true" hidden="">
         <div class="card-content">
           <mat-form-field>
             <mat-select name="idStage" [(ngModel)]="idStage" (ngModelChange)="getYears(idStage)" placeholder="اختر الطور">
@@ -81,28 +81,165 @@
         </div>
       </div>
     </div>
-    <!-- End Add steps -->
-        <!-- Add steps modal -->
-        <div id="steps" uk-modal>
-            <div class="uk-modal-dialog uk-modal-body">
-                <h2 class="uk-modal-title">خطوات تعلم لغة</h2>
-                <div class="example-container">
-                    <br>
-                    <form>
-                      <mat-form-field>
-                        <input matInput type="text" [(ngModel)]="titles" required name="titles" autocomplete="false"  placeholder="العنوان">
-                      </mat-form-field>
-                      <br>
-                      <mat-form-field >
-                        <textarea matInput [(ngModel)]="article" required name="article" placeholder="الخطوات :" ></textarea>
-                      </mat-form-field>
-                      <br>
-                      <button mat-button color="primary" (click)="addSteps()">اضافة المقالة</button>
-                    </form>  
-                    <br><br>  
-                </div>     
-            </div>
+    <!-- End Add field -->
+  </div>
+</section>
+
+<section>
+  <div class="uk-column-1-2@s uk-column-1-3@m">
+    <!-- Start Add Module -->
+    <div class="card">
+      <div class="card-header">
+          <button href="#toggle-animation" class="uk-button uk-button-default" type="button" uk-toggle="target: #module; animation: uk-animation-fade">اضافة مادة</button>
+      </div>
+      <div id="module" aria-hidden="true" hidden="">
+        <form>
+          <div class="card-content">
+            <mat-form-field>
+              <mat-select name="idStage" [(ngModel)]="idStage" (ngModelChange)="getYears(idStage)" placeholder="اختر الطور">
+                <mat-option *ngFor="let stage of allStages" [value]="stage.idStage">
+                  {{stage.stage_name}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+            <br>
+            <mat-form-field>
+              <mat-select name="idYear" [(ngModel)]="idYear"  placeholder="اختر السنة" (ngModelChange)="getFields(idYear)">
+                <mat-option *ngFor="let year of allYears" [value]="year.idYear">
+                  {{year.year_name}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+            <br>
+            <mat-form-field>
+                <mat-select name="idField" [(ngModel)]="idField"  placeholder="اختر الشعبة">
+                  <mat-option *ngFor="let field of allFields" [value]="field.idField">
+                    {{field.field_name}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+              <br>
+            <mat-form-field>
+              <input matInput type="text" [(ngModel)]="moduleName" required name="moduleName" placeholder="اسم المادة">
+            </mat-form-field>
+            <br>
           </div>
-          <!-- End steps modal -->
+          <div class="card-footer">
+            <button mat-button color="primary" (click)="addModule()">اضافة المادة</button>
+          </div>
+        </form>
+      </div>
+    </div>
+    <!-- End Add Module -->
+    <!-- Start Add subject -->  
+    <div class="card">
+      <div class="card-header">
+          <button href="#toggle-animation" class="uk-button uk-button-default" type="button" uk-toggle="target: #subject; animation: uk-animation-fade">اضافة موضوع</button>
+      </div>
+      <div id="subject" aria-hidden="true" hidden="">
+        <form>
+          <div class="card-content">
+              <mat-form-field>
+                <mat-select name="idStage" [(ngModel)]="idStage" (ngModelChange)="getYears(idStage)" placeholder="اختر الطور">
+                  <mat-option *ngFor="let stage of allStages" [value]="stage.idStage">
+                    {{stage.stage_name}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+              <br>
+              <mat-form-field>
+                <mat-select name="idYear" [(ngModel)]="idYear"  placeholder="اختر السنة" (ngModelChange)="getFields(idYear)">
+                  <mat-option *ngFor="let year of allYears" [value]="year.idYear">
+                    {{year.year_name}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+              <br>
+              <mat-form-field>
+                <mat-select name="idField" [(ngModel)]="idField"  placeholder="اختر الشعبة" (ngModelChange)="getModules(idField)">
+                  <mat-option *ngFor="let field of allFields" [value]="field.idField">
+                    {{field.field_name}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+              <br>
+              <mat-form-field>
+                  <mat-select name="idModule" [(ngModel)]="idModule"  placeholder="اختر المادة">
+                    <mat-option *ngFor="let modul of allModules" [value]="modul.idModule">
+                      {{modul.module_name}}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+            <br>
+            <mat-form-field>
+              <input matInput type="text" required [(ngModel)]="subjectTitle" name="subjectTitle" placeholder="عنوان الموضوع ">
+            </mat-form-field>
+            <mat-form-field>
+              <input matInput type="text" required [(ngModel)]="subjectLink" name="subjectLink" placeholder="رابط الموضوع">
+            </mat-form-field>
+            <br>
+          </div>
+          <div class="card-footer">
+            <button mat-button color="primary" (click)="addSubject(idModule,subjectTitle,subjectLink)">اضافة موضوع</button>
+          </div>
+        </form>
+      </div>
+    </div>
+    <!-- End Add subject -->
+<!-- Start Add lesson -->  
+<div class="card">
+    <div class="card-header">
+        <button href="#toggle-animation" class="uk-button uk-button-default" type="button" uk-toggle="target: #lesson; animation: uk-animation-fade">اضافة درس</button>
+    </div>
+    <div id="lesson" aria-hidden="true" hidden="">
+      <form>
+        <div class="card-content">
+            <mat-form-field>
+              <mat-select name="idStage" [(ngModel)]="idStage" (ngModelChange)="getYears(idStage)" placeholder="اختر الطور">
+                <mat-option *ngFor="let stage of allStages" [value]="stage.idStage">
+                  {{stage.stage_name}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+            <br>
+            <mat-form-field>
+              <mat-select name="idYear" [(ngModel)]="idYear"  placeholder="اختر السنة" (ngModelChange)="getFields(idYear)">
+                <mat-option *ngFor="let year of allYears" [value]="year.idYear">
+                  {{year.year_name}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+            <br>
+            <mat-form-field>
+              <mat-select name="idField" [(ngModel)]="idField"  placeholder="اختر الشعبة" (ngModelChange)="getModules(idField)">
+                <mat-option *ngFor="let field of allFields" [value]="field.idField">
+                  {{field.field_name}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+            <br>
+            <mat-form-field>
+                <mat-select name="idModule" [(ngModel)]="idModule"  placeholder="اختر المادة">
+                  <mat-option *ngFor="let modul of allModules" [value]="modul.idModule">
+                    {{modul.module_name}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+          <br>
+          <mat-form-field>
+            <input matInput type="text" required [(ngModel)]="lessonTitle" name="lessonTitle" placeholder="عنوان الدرس ">
+          </mat-form-field>
+          <mat-form-field>
+            <input matInput type="text" required [(ngModel)]="lessonLink" name="lessonLink" placeholder="رابط الدرس">
+          </mat-form-field>
+          <br>
+        </div>
+        <div class="card-footer">
+          <button mat-button color="primary" (click)="addLesson(idModule,lessonTitle,lessonLink)">اضافة درس</button>
+        </div>
+      </form>
+    </div>
+  </div>
+  <!-- End Add lesson -->
   </div>
 </section>

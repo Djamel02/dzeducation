@@ -99,9 +99,35 @@ router.post('/year',(req,res) =>{
     db.createYear(year.yearName,year.idStage,res);
 })
 
+//get Fields
+router.get('/fields/:id',(req,res) => {
+    db.getFields(req.params.id,res)
+})
 //Add field
 router.post('/field',(req,res)=>{
     field = req.body;
     db.createField(field.fieldName,field.idYear,res)
+})
+
+//get modules
+router.get('/modules/:id',(req,res) =>{
+    db.getModules(req.params.id,res)
+})
+//add Module
+router.post('/module',(req,res) =>{
+    let modul = req.body;
+    db.createModules(modul.moduleName,modul.idField,res)
+})
+
+//add subject
+router.post('/subject',(req,res) =>{
+    let sub = req.body;
+    db.createSubject(sub.idmodule,sub.subjectTitle,sub.subjectLink,res)
+})
+
+//add lesson
+router.post('/lesson',(req,res) =>{
+    let lesson = req.body
+    db.createLesson(lesson.idModule,lesson.lessonTitle,lesson.lessonLink,res)
 })
 module.exports = router;

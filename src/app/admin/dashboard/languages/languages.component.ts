@@ -26,7 +26,8 @@ export class LanguagesComponent implements OnInit {
   lang_name:string;
   video: any;
   lang_v: any;
-  constructor(private data:ServiceService, private router:Router) { }
+  constructor(private data:ServiceService, private router:Router) {
+   }
 
   ngOnInit() {
     this.getLanguages();

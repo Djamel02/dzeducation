@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Title } from '@angular/platform-browser';
 
 
 @Component({
@@ -40,12 +41,14 @@ export class SidenavComponent implements OnInit {
       link:"statics"
     },
   ]
-  constructor() { }
+  constructor(private titleService:Title) {
+   }
 
   ngOnInit() {
   }
   setHeader(i){
     this.header = this.listItem[i]['title'];
+    this.titleService.setTitle(this.header);
   }
 
 }

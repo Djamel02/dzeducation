@@ -178,8 +178,8 @@ module.exports = class ADL {
     /* End Year data */
     /* Start Fields data */
     //Get Fields
-    getFields(res){
-        return this.connection.query('SELECT * FROM fields',(err,result) =>{
+    getFields(idYear,res){
+        return this.connection.query(`SELECT * FROM fields WHERE idYear = ${idYear}`,(err,result) =>{
             try {
                 this.response.data = result
                 res.json(this.response)
@@ -218,8 +218,8 @@ module.exports = class ADL {
     /* End Fields data */
     /* Start Modules data */
     //Get Modules
-    getModules(res){
-        return this.connection.query('SELECT * FROM modules',(err,result) =>{
+    getModules(idField,res){
+        return this.connection.query(`SELECT * FROM modules WHERE idField = ${idField}`,(err,result) =>{
             try {
                 this.response.data = result
                 res.json(this.response)
@@ -229,8 +229,8 @@ module.exports = class ADL {
         })
     }
     //Create Modules
-    createModules(moduleName,res){
-        return this.connection.query('INSERT INTO modules (module_name) values(?)',fieldName,(err,result) =>{
+    createModules(moduleName,idField,res){
+        return this.connection.query('INSERT INTO modules (module_name,idField) values(?,?)',[moduleName,idField],(err,result) =>{
             try {
                 this.response.data = result
                 res.json(this.response)
@@ -256,6 +256,32 @@ module.exports = class ADL {
     //TODO
     deleteModules(idModule,res){}
     /* End Fields data */
+    /*Start subjects works*/
+    //Add subject
+    createSubject(idModule,subjectTitle,subjectLink,res){
+        return this.connection.query('INSERT INTO subjects (subject_title,subject_link,idModule) values(?,?,?)',[subjectTitle,subjectLink,idModule],(err,result) =>{
+            try {
+                this.response.data = result
+                res.json(this.response)
+            }catch(err) {
+                this.sendError(err,res)
+            }
+        })
+    }
+    /*End subjects works */
+    /*Start lessons works */
+    //Add lesson
+    createLesson(idModule,lessonTitle,lessonLink,res){
+        return this.connection.query('INSERT INTO lessons (lesson_title,lesson_link,idModule) values(?,?,?)',[lessonTitle,lessonLink,idModule],(err,result) =>{
+            try {
+                this.response.data = result
+                res.json(this.response)
+            }catch(err) {
+                this.sendError(err,res)
+            }
+        })
+    }
+    /*End lessons works */
     /* Start Languages data */
     //get All languages
     getLanguages(res){

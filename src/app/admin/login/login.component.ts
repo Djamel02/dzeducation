@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router'
 import { ServiceService } from '../../service.service'
+import { Title } from '@angular/platform-browser';
 declare var UIkit:any;
 @Component({
   selector: 'app-login',
@@ -11,7 +12,8 @@ export class LoginComponent implements OnInit {
   email:string;
   pass:string;
   
-  constructor(public data:ServiceService,private router:Router) {
+  constructor(public data:ServiceService,private router:Router,private titleService:Title) {
+    this.titleService.setTitle('تسجيل الدخول')
     //TODO: check if localstorage has admin, then login with data
     if(localStorage.getItem('admin') != null){
       let admin = JSON.parse(localStorage.getItem('admin'));
