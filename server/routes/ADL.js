@@ -257,9 +257,20 @@ module.exports = class ADL {
     deleteModules(idModule,res){}
     /* End Fields data */
     /*Start subjects works*/
+    //Get Subjects
+    getSubjects(idModule,res){
+        return this.connection.query(`SELECT idSubject,subject_title FROM subjects WHERE idModule = ${idModule} ` ,(err,result) =>{
+            try {
+                this.response.data = result
+                res.json(this.response)
+            }catch(err) {
+                this.sendError(err,res)
+            }
+        })
+    }
     //Add subject
-    createSubject(idModule,subjectTitle,subjectLink,res){
-        return this.connection.query('INSERT INTO subjects (subject_title,subject_link,idModule) values(?,?,?)',[subjectTitle,subjectLink,idModule],(err,result) =>{
+    createSubject(idModule,subjectTitle,subjectLink,imgUrl,discrib,res){
+        return this.connection.query('INSERT INTO subjects (subject_title,subject_link,img_url,discrib,idModule) values(?,?,?,?,?)',[subjectTitle,subjectLink,imgUrl,discrib,idModule],(err,result) =>{
             try {
                 this.response.data = result
                 res.json(this.response)
@@ -270,9 +281,31 @@ module.exports = class ADL {
     }
     /*End subjects works */
     /*Start lessons works */
+    //Get Lessons
+    getLessons(idModule,res){
+        return this.connection.query(`SELECT idLesson,lesson_title FROM lessons WHERE idModule = ${idModule} ORDER BY idLesson` ,(err,result) =>{
+            try {
+                this.response.data = result
+                res.json(this.response)
+            }catch(err) {
+                this.sendError(err,res)
+            }
+        })
+    }
+    //Get Lesson By id
+    getLessonById(idLesson,res){
+        return this.connection.query(`SELECT * FROM lessons WHERE idLesson = ${idLesson} LIMIT 1` ,(err,result) =>{
+            try {
+                this.response.data = result
+                res.json(this.response)
+            }catch(err) {
+                this.sendError(err,res)
+            }
+        })
+    }
     //Add lesson
-    createLesson(idModule,lessonTitle,lessonLink,res){
-        return this.connection.query('INSERT INTO lessons (lesson_title,lesson_link,idModule) values(?,?,?)',[lessonTitle,lessonLink,idModule],(err,result) =>{
+    createLesson(idModule,lessonTitle,lessonLink,imgUrl,discrib,res){
+        return this.connection.query('INSERT INTO lessons (lesson_title,lesson_link,imgUrl,discrib,idModule) values(?,?,?,?,?)',[lessonTitle,lessonLink,imgUrl,discrib,idModule],(err,result) =>{
             try {
                 this.response.data = result
                 res.json(this.response)

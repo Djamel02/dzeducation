@@ -25,6 +25,10 @@ export class StatusComponent implements OnInit {
   lessonTitle: string;
   subjectTitle: string;
   subjectLink: string;
+  lessons: any;
+  id: number;
+  lesson: any;
+  subjects: any;
   constructor(private data:ServiceService,private titleService: Title ) { }
 
   ngOnInit() {
@@ -114,6 +118,7 @@ export class StatusComponent implements OnInit {
       if(res.json().data.affectedRows > 0){
         this.successNotification(`تمت اضافة مادة ${this.moduleName} بنجاح`)
         this.moduleName = ''
+        this.getModules('');
       }else{
         this.errorNotification();
       }
@@ -121,12 +126,21 @@ export class StatusComponent implements OnInit {
   }
   /*End Modules works */
   /*Start Subject works */
+  //get subjects
+  getSubjects(id){
+    this.data.getSubjects(id).subscribe(res =>{
+      this.subjects = res.json().data
+      console.log(this.subjects)
+    })
+  }
   //Add Subject
-  addSubject(idmodule,subtitle,sublink){
+  addSubject(subtitle,subjecImg,sublink,discrib){
     let subject = {
       idmodule:this.idModule,
       subjectTitle:subtitle,
-      subjectLink:sublink
+      subjectLink:sublink,
+      imgUrl:subjecImg,
+      discrib:discrib
     }
     this.data.addSubject(subject).subscribe(res =>{
       if(res.json().data.affectedRows > 0){
@@ -145,24 +159,42 @@ export class StatusComponent implements OnInit {
   addSolution(){}
   /*End Solution works */
   /*Start Lesson works */
+  //Get Lesson
+  getLessons(id){
+    this.data.getLessons(id).subscribe(res => {
+      this.lessons = res.json().data
+    })
+  }
+  //Get lesson by id
+  getLessonById(){
+    this.data.getLessonById(this.id).subscribe(res =>{
+      this.lesson = res.json().data
+      console.log(this.lesson)
+    })
+  }
   //Add lesson
-  addLesson(idModule,lessonTitle,lessonLink){
+  addLesson(idModule,lessonTitle,lessonLink,limgUrl,ldiscrib){
     let lesson = {
       idModule:this.idModule,
       lessonTitle:lessonTitle,
-      lessonLink:lessonLink
+      lessonLink:lessonLink,
+      imgUrl:limgUrl,
+      discrib:ldiscrib
     }
     this.data.addLesson(lesson).subscribe(res =>{
       if(res.json().data.affectedRows > 0){
         this.successNotification(`تمت اضافة درس ${lessonTitle} بنجاح`)
         this.lessonTitle ='';
-        this.lessonLink =''
+        this.lessonLink ='';
+        this.getLessons('');
       }else{
         this.errorNotification();
       }
     })
     
   }
+  //Delete Lesson
+  deleteLesson(id){}
   /*End Lesson works */
 
   //successnotification
@@ -183,5 +215,17 @@ export class StatusComponent implements OnInit {
       pos: 'top-center',
       timeout: 2000
     });
+  }
+
+  //showModal
+  showModal(modal:string, id?:number){
+    UIkit.modal(modal).show();
+    if(id){
+      this.id = id;
+    }
+  }
+  //hide modal
+  hideModal(modal){
+    UIkit.modal(modal).hide();
   }
 }

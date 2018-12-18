@@ -76,25 +76,25 @@
         <!-- End Add steps -->
             <!-- Add steps modal -->
             <div id="steps" uk-modal>
-                <div class="uk-modal-dialog uk-modal-body">
-                    <h2 class="uk-modal-title">خطوات تعلم لغة</h2>
-                    <div class="example-container">
+              <div class="uk-modal-dialog uk-modal-body">
+                  <h2 class="uk-modal-title">خطوات تعلم لغة</h2>
+                  <div class="example-container">
+                      <br>
+                      <form>
+                        <mat-form-field>
+                          <input matInput type="text" [(ngModel)]="titles" required name="titles" autocomplete="false"  placeholder="العنوان">
+                        </mat-form-field>
                         <br>
-                        <form>
-                          <mat-form-field>
-                            <input matInput type="text" [(ngModel)]="titles" required name="titles" autocomplete="false"  placeholder="العنوان">
-                          </mat-form-field>
-                          <br>
-                          <mat-form-field >
-                            <textarea matInput [(ngModel)]="article" required name="article" placeholder="الخطوات :" ></textarea>
-                          </mat-form-field>
-                          <br>
-                          <button mat-button color="primary" (click)="addSteps()">اضافة المقالة</button>
-                        </form>  
-                        <br><br>  
-                    </div>     
-                </div>
+                        <mat-form-field >
+                          <textarea matInput [(ngModel)]="article" required name="article" placeholder="الخطوات :" ></textarea>
+                        </mat-form-field>
+                        <br>
+                        <button mat-button color="primary" (click)="addSteps()">اضافة المقالة</button>
+                      </form>  
+                      <br><br>  
+                  </div>     
               </div>
+            </div>
               <!-- End steps modal -->
       </div>
   </section>

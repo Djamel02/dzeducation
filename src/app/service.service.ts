@@ -130,12 +130,24 @@ export class ServiceService {
     }
   /*End Modules works */
   /*Start subjects works */
+    //get Subjects
+    getSubjects(idModule){
+      return this._http.get('/api/subjects/'+idModule)
+    }
     //add subject
     addSubject(subject){
       return this._http.post('/api/subject',subject);
     }
   /*End Subjects works */
   /*Start Lessons works */
+    //get Lessons
+    getLessons(idModule){
+      return this._http.get('/api/lessons/'+idModule)
+    }
+    //get Lesson by id
+    getLessonById(id){
+      return this._http.get('/api/lesson/'+id)
+    }
     //add lesson
     addLesson(lesson){
       return this._http.post('/api/lesson',lesson);

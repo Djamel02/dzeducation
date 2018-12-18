@@ -118,16 +118,27 @@ router.post('/module',(req,res) =>{
     let modul = req.body;
     db.createModules(modul.moduleName,modul.idField,res)
 })
-
+//get subjects
+router.get('/subjects/:id',(req,res)=>{
+    db.getSubjects(req.params.id,res);
+})
 //add subject
 router.post('/subject',(req,res) =>{
     let sub = req.body;
-    db.createSubject(sub.idmodule,sub.subjectTitle,sub.subjectLink,res)
+    db.createSubject(sub.idmodule,sub.subjectTitle,sub.subjectLink,sub.imgUrl,sub.discrib,res)
 })
 
+//get lessons
+router.get('/lessons/:id',(req,res) =>{
+    db.getLessons(req.params.id,res)    
+})
+//get lessson by id lesson
+router.get('/lesson/:id',(req,res)=>{
+    db.getLessonById(req.params.id,res)
+})
 //add lesson
 router.post('/lesson',(req,res) =>{
     let lesson = req.body
-    db.createLesson(lesson.idModule,lesson.lessonTitle,lesson.lessonLink,res)
+    db.createLesson(lesson.idModule,lesson.lessonTitle,lesson.lessonLink,lesson.imgUrl,lesson.discrib,res)
 })
 module.exports = router;
