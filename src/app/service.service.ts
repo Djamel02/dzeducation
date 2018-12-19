@@ -134,11 +134,33 @@ export class ServiceService {
     getSubjects(idModule){
       return this._http.get('/api/subjects/'+idModule)
     }
+    //get Subject by id
+    getSubjectById(id){
+      return this._http.get('/api/subject/'+id);
+    }
     //add subject
     addSubject(subject){
       return this._http.post('/api/subject',subject);
     }
+    //Edit subject
+    editSubject(id,subject){
+      return this._http.put('/api/subject/'+id,subject);
+    }
+    // Delete subject
+    deleteSubject(id){
+      return this._http.delete('/api/subject/'+id);
+    }
   /*End Subjects works */
+  /* Start Solutions Works */
+    //get Solution
+    getSolution(idSubject){
+      return this._http.get('/api/solution/'+idSubject)
+    }
+    //add solution
+    addSolution(solution){
+      return this._http.post('/api/solution',solution)
+    }
+  /* End Solutions Works */
   /*Start Lessons works */
     //get Lessons
     getLessons(idModule){
@@ -151,6 +173,14 @@ export class ServiceService {
     //add lesson
     addLesson(lesson){
       return this._http.post('/api/lesson',lesson);
+    }
+    //Edit Lesson
+    editLesson(id,lesson){
+      return this._http.put('/api/lesson/'+id,lesson)
+    }
+    //delete Lesson
+    deleteLesson(id){
+      return this._http.delete('/api/lesson/'+id);
     }
   /*End Lessons works */
 }

@@ -122,12 +122,33 @@ router.post('/module',(req,res) =>{
 router.get('/subjects/:id',(req,res)=>{
     db.getSubjects(req.params.id,res);
 })
+//get subject by id
+router.get('/subject/:id',(req,res) =>{
+    db.getSubjectById(req.params.id,res);
+})
 //add subject
 router.post('/subject',(req,res) =>{
     let sub = req.body;
-    db.createSubject(sub.idmodule,sub.subjectTitle,sub.subjectLink,sub.imgUrl,sub.discrib,res)
+    db.createSubject(sub.idModule,sub.subject_title,sub.subject_link,sub.img_url,sub.discrib,res)
 })
-
+//edit subject
+router.put('/subject/:id',(req,res) =>{
+    let subject = req.body;
+    db.updateSubject(req.params.id,subject.subject_title,subject.subject_link,subject.img_url,subject.discrib,res)
+})
+//delete subject
+router.delete('/subject/:id',(req,res) =>{
+    db.deleteSubject(req.params.id,res)
+})
+//get solution
+router.get('/solution/:id',(req,res) =>{
+    db.getSolution(req.params.id,res);
+})
+//add solution
+router.post('/solution',(req,res) =>{
+    let solution = req.body;
+    db.createSolution(solution.solutionLink,solution.imgUrl,solution.idSubject,res)
+})
 //get lessons
 router.get('/lessons/:id',(req,res) =>{
     db.getLessons(req.params.id,res)    
@@ -139,6 +160,15 @@ router.get('/lesson/:id',(req,res)=>{
 //add lesson
 router.post('/lesson',(req,res) =>{
     let lesson = req.body
-    db.createLesson(lesson.idModule,lesson.lessonTitle,lesson.lessonLink,lesson.imgUrl,lesson.discrib,res)
+    db.createLesson(lesson.idModule,lesson.lesson_title,lesson.lesson_link,lesson.imgUrl,lesson.discrib,res)
+})
+//edit lesson
+router.put('/lesson/:id',(req,res) =>{
+    let lesson = req.body;
+    db.updateLesson(req.params.id,lesson.lesson_title,lesson.lesson_link,lesson.imgUrl,lesson.discrib,res)
+})
+//delete Lesson
+router.delete('/lesson/:id',(req,res) =>{
+    db.deleteLesson(req.params.id,res)
 })
 module.exports = router;

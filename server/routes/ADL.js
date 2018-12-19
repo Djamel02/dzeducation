@@ -268,6 +268,17 @@ module.exports = class ADL {
             }
         })
     }
+    //Get Subject infos by id
+    getSubjectById(idSubject,res){
+        return this.connection.query(`SELECT * FROM subjects WHERE idSubject = ${idSubject} LIMIT 1 ` ,(err,result) =>{
+            try {
+                this.response.data = result
+                res.json(this.response)
+            }catch(err) {
+                this.sendError(err,res)
+            }
+        })
+    }
     //Add subject
     createSubject(idModule,subjectTitle,subjectLink,imgUrl,discrib,res){
         return this.connection.query('INSERT INTO subjects (subject_title,subject_link,img_url,discrib,idModule) values(?,?,?,?,?)',[subjectTitle,subjectLink,imgUrl,discrib,idModule],(err,result) =>{
@@ -279,7 +290,53 @@ module.exports = class ADL {
             }
         })
     }
+    //Update Subject
+    updateSubject(idSubject,subject_title,subject_link,img_url,discrib,res){
+        return this.connection.query('UPDATE subjects SET subject_title = ? , subject_link = ? , img_url = ? , discrib = ? WHERE idSubject = ?',[subject_title,subject_link,img_url,discrib,idSubject],(err,result) =>{
+            try {
+                this.response.data = result
+                res.json(this.response)
+            }catch(err) {
+                this.sendError(err,res)
+            }
+        })
+    }
+    //Delete subject
+    deleteSubject(idSubject,res){
+        return this.connection.query('DELETE subjects, solutions FROM subjects INNER JOIN solutions ON subjects.idSubject = solutions.idSubject WHERE subjects.idSubject = ? ',[idSubject],(err,result) =>{
+            try {
+                this.response.data = result
+                res.json(this.response)
+            }catch(err) {
+                this.sendError(err,res)
+            }
+        })
+    }
     /*End subjects works */
+    /*Start Solutions Works */
+    //get Solution
+    getSolution(idSubject,res){
+        return this.connection.query(`SELECT idSolution,solution_link,imgUrl,subject_title FROM solutions INNER JOIN subjects WHERE solutions.idSubject = ${idSubject} AND solutions.idSubject = subjects.idSubject LIMIT 1 ` ,(err,result) =>{
+            try {
+                this.response.data = result
+                res.json(this.response)
+            }catch(err) {
+                this.sendError(err,res)
+            }
+        })
+    }
+    //Create Solution
+    createSolution(solLink,imgUrl,idSubject,res){
+        return this.connection.query('INSERT INTO solutions (imgUrl,solution_link,idSubject) values(?,?,?)',[imgUrl,solLink,idSubject],(err,result) =>{
+            try {
+                this.response.data = result
+                res.json(this.response)
+            }catch(err) {
+                this.sendError(err,res)
+            }
+        })
+    }
+    /*End Solutions Works */
     /*Start lessons works */
     //Get Lessons
     getLessons(idModule,res){
@@ -306,6 +363,28 @@ module.exports = class ADL {
     //Add lesson
     createLesson(idModule,lessonTitle,lessonLink,imgUrl,discrib,res){
         return this.connection.query('INSERT INTO lessons (lesson_title,lesson_link,imgUrl,discrib,idModule) values(?,?,?,?,?)',[lessonTitle,lessonLink,imgUrl,discrib,idModule],(err,result) =>{
+            try {
+                this.response.data = result
+                res.json(this.response)
+            }catch(err) {
+                this.sendError(err,res)
+            }
+        })
+    }
+    //Update lesson
+    updateLesson(id,lessonTitle,lessonLink,imgUrl,discrib,res){
+        return this.connection.query('UPDATE lessons SET lesson_title = ? , lesson_link = ? , imgUrl = ? , discrib = ? WHERE idLesson = ?',[lessonTitle,lessonLink,imgUrl,discrib,id],(err,result) =>{
+            try {
+                this.response.data = result
+                res.json(this.response)
+            }catch(err) {
+                this.sendError(err,res)
+            }
+        })
+    }
+    //Delete Lesson
+    deleteLesson(idLesson,res){
+        return this.connection.query('DELETE FROM lessons WHERE idLesson = ?',[idLesson],(err,result) =>{
             try {
                 this.response.data = result
                 res.json(this.response)

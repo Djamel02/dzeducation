@@ -40,6 +40,7 @@
               </div>
               <div>
                   <select class="uk-select" name="idModule" [(ngModel)]="idModule"  placeholder="اختر المادة" (ngModelChange)="getLessons(idModule)">
+                    <option value="">-اختر المادة-</option>
                     <option *ngFor="let modul of allModules" [value]="modul.idModule">
                       {{modul.module_name}}
                     </option>
@@ -62,9 +63,9 @@
                           <td>{{lesson.idLesson}}</td>
                           <td>{{lesson.lesson_title}}</td>
                           <td>
-                            <button class="uk-button uk-button-default uk-button-small" (click)="showModal('#previewLesson',lesson.idLesson);getLessonById(lesson.idLesson)" >مشاهدة</button> 
-                            <button class="uk-button uk-button-primary uk-button-small" (click)="showModal('#editLesson',lesson.idLesson)" >تعديل</button> 
-                            <button class="uk-button uk-button-danger uk-button-small" (click)="deleteLesson(lesson.idLesson)" >حذف</button>
+                            <button class="uk-button uk-button-default uk-button-small" (click)="getLessonById(lesson.idLesson);showModal('#previewLesson',lesson.idLesson)" >مشاهدة</button> 
+                            <button class="uk-button uk-button-primary uk-button-small" (click)="showModal('#editLesson',lesson.idLesson);getLessonById(lesson.idLesson)" >تعديل</button> 
+                            <button class="uk-button uk-button-danger uk-button-small" (click)="showModal('#deleteLesson',lesson.idLesson)" >حذف</button>
                           </td>
                       </tr>
                   </tbody>
@@ -115,6 +116,7 @@
                 </div>
                 <div>
                     <select class="uk-select" name="idModule" [(ngModel)]="idModule"  placeholder="اختر المادة" (ngModelChange)="getSubjects(idModule)">
+                      <option value="">-اختر المادة-</option>
                       <option *ngFor="let modul of allModules" [value]="modul.idModule">
                         {{modul.module_name}}
                       </option>
@@ -137,10 +139,10 @@
                             <td>{{subject.idSubject}}</td>
                             <td>{{subject.subject_title}}</td>
                             <td>
-                              <button class="uk-button uk-button-default uk-button-small" (click)="showModal('#previewSubject',subject.idSubject);getSubjectById(subject.idSubject)" >مشاهدة</button> 
-                              <button class="uk-button uk-button-secondary uk-button-small" (click)="showModal('#solutionModal',subject.idSubject);addSolution(subject.idSubject)" >اضافة حل</button> 
-                              <button class="uk-button uk-button-primary uk-button-small" (click)="showModal('#editSubject',subject.idSubject)" >تعديل</button> 
-                              <button class="uk-button uk-button-danger uk-button-small" (click)="deleteSubject(subject.idSubject)" >حذف</button>
+                              <button class="uk-button uk-button-default uk-button-small" (click)="getSubjectById(subject.idSubject);showModal('#previewSubject',subject.idSubject);getSolution(subject.idSubject)" >مشاهدة</button> 
+                              <button class="uk-button uk-button-secondary uk-button-small" (click)="showModal('#solutionModal',subject.idSubject)" >اضافة حل</button> 
+                              <button class="uk-button uk-button-primary uk-button-small" (click)="getSubjectById(subject.idSubject);showModal('#editSubject',subject.idSubject)" >تعديل</button> 
+                              <button class="uk-button uk-button-danger uk-button-small" (click)="showModal('#deleteSubject',subject.idSubject)" >حذف</button>
                             </td>
                         </tr>
                     </tbody>
@@ -148,12 +150,32 @@
               </div>
             </div>
           </div>
-          <!-- End lessons table modal -->
+          <!-- End subject table modal -->
         </div>
       <!-- End Subjects Table -->
     </div>
   </div>
   <!-- End Tables Modals -->
+</section>
+<section>
+  <!-- Start add solution Modal -->
+  <div id="solutionModal" uk-modal>
+    <div class="uk-modal-dialog uk-modal-body">
+      <h2 class="uk-modal-title"> اضافة حل</h2>
+      <form>
+        <div class="card-content">
+          <input class="uk-input" type="text" [(ngModel)]="solLink" required name="solLink" placeholder="رابط الحل">
+          <br>
+          <input class="uk-input" type="text" [(ngModel)]="imgUrl" required name="imgUrl" placeholder="رابط صورة الحل">
+          <br>
+        </div>
+        <div class="card-footer">
+          <button mat-button color="primary" (click)="addSolution(imgUrl,solLink)">اضافة الحل</button>
+        </div>
+      </form>
+    </div>
+  </div>
+  <!-- End add Solution Modal -->
 </section>
 <!-- Start Preview  Modal -->
 <section>
@@ -162,22 +184,161 @@
     <div class="uk-modal-dialog uk-modal-body">
       <div class="uk-card uk-card-default" *ngIf="lesson">
         <div class="uk-card-header">
-          <h2 class="uk-text-center">{{lesson[0].lesson_title}}</h2>
+          <h2 class="uk-text-center">{{lesson.lesson_title}}</h2>
         </div>
         <div class="uk-card-body">
-          <img class="uk-height-medium uk-flex uk-flex-center uk-flex-middle uk-background-cover uk-light" data-src="{{lesson[0].imgUrl}}" uk-img>
-          <a target="_blank" href="{{lesson[0].lesson_link}}">تحميل الدرس</a>
+          <img class="uk-height-medium uk-flex uk-flex-center uk-flex-middle uk-background-cover uk-light" data-src="{{lesson.imgUrl}}" uk-img>
+          <a target="_blank" href="{{lesson.lesson_link}}">تحميل الدرس</a>
         </div>
         <div class="uk-card-footer">
-          <p class="uk-article-meta">{{lesson[0].discrib}}</p>
+          <p class="uk-article-meta">{{lesson.discrib}}</p>
           <button mat-button color="accent" (click)="hideModal('#previewLesson');showModal('#lesson_tbl')">اغلاق</button>
         </div>
       </div>
     </div>
   </div>
   <!-- End Lesson preview -->
+  <!-- Start Subject preview -->
+  <div id="previewSubject" uk-modal>
+    <div class="uk-modal-dialog uk-modal-body">
+      <div class="uk-card uk-card-default" *ngIf="subject">
+        <div class="uk-card-header">
+          <h2 class="uk-text-center">{{subject.subject_title}}</h2>
+        </div>
+        <div class="uk-card-body">
+          <img class="uk-height-medium uk-flex uk-flex-center uk-flex-middle uk-background-cover uk-light" data-src="{{subject.img_url}}" uk-img>
+          <a target="_blank" href="{{subject.subject_link}}">تحميل الموضوع</a> <br>
+          <a *ngIf="solution" (click)="showModal('#previewSolution',subject.idSubject)"> مشاهدة الحل</a>
+        </div>
+        <div class="uk-card-footer">
+          <p class="uk-article-meta">{{subject.discrib}}</p>
+          <button mat-button color="accent" (click)="hideModal('#previewSubject');showModal('#subject_tbl')">اغلاق</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- End Subject preview -->
+  <!-- Start solution preview -->
+  <div id="previewSolution" uk-modal>
+    <div class="uk-modal-dialog uk-modal-body">
+      <div class="uk-card uk-card-default" *ngIf="solution">
+        <div class="uk-card-header">
+          <h2 class="uk-text-center">حل موضوع : {{solution.subject_title}}</h2>
+        </div>
+        <div class="uk-card-body">
+          <img class="uk-height-medium uk-flex uk-flex-center uk-flex-middle uk-background-cover uk-light" data-src="{{solution.imgUrl}}" uk-img>
+          <a target="_blank" href="{{solution.solution_link}}">تحميل الحل</a>
+        </div>
+        <div class="uk-card-footer">
+            <button mat-button color="primary" (click)="showModal('#editSolution',solution.idSolution)">تعديل</button>
+          <button mat-button color="accent" (click)="hideModal('#previewSolution');showModal('#previewSubject')">اغلاق</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- End solution preview -->
 </section>
-<!-- Start Preview  Modal -->
+<!-- End Preview  Modal -->
+<!-- Start Edits Modals -->
+<section>
+  <!-- Start Edit lesson Modal -->
+  <div id="editLesson" uk-modal>
+    <div class="uk-modal-dialog uk-modal-body">
+      <h2 class="uk-modal-title"> تعديل درس</h2>
+      <form *ngIf="lesson">
+        <div class="card-content">
+          <br>
+            <input class="uk-input" type="text" required [(ngModel)]="lesson.lesson_title" name="lesson.lesson_title"  placeholder="عنوان الدرس ">
+            <div class="uk-column-1-2@s">
+              <input class="uk-input" type="text" required [(ngModel)]="lesson.lesson_link" name="lesson.lesson_link"  placeholder="رابط الدرس">
+              <input class="uk-input" type="text" required [(ngModel)]="lesson.imgUrl" name="lesson.imgUrl"  placeholder="رابط صورة للدرس">
+            </div>
+            <textarea class="uk-textarea" required [(ngModel)]="lesson.discrib" name="lesson.discrib" rows="5" placeholder="وصف للدرس"></textarea>
+          <br>
+        </div>
+        <div class="card-footer">
+          <button mat-button color="primary" (click)="editLesson()">تحديث</button>
+          <button mat-button color="accent" (click)="hideModal('#editLesson');showModal('#lesson_tbl')">اغلاق</button>
+        </div>
+      </form>
+    </div>
+  </div>
+  <!-- End Edit lesson modal -->
+  <!-- Start Edit Subject Modal -->
+  <div id="editSubject" uk-modal>
+      <div class="uk-modal-dialog uk-modal-body">
+        <h2 class="uk-modal-title"> تعديل موضوع</h2>
+        <form *ngIf="lesson">
+          <div class="card-content">
+            <br>
+              <input class="uk-input" type="text" required [(ngModel)]="subject.subject_title" name="subject.subject_title"  placeholder="عنوان الدرس ">
+              <div class="uk-column-1-2@s">
+                <input class="uk-input" type="text" required [(ngModel)]="subject.subject_link" name="subject.subject_link"  placeholder="رابط الدرس">
+                <input class="uk-input" type="text" required [(ngModel)]="subject.img_url" name="subject.img_url"  placeholder="رابط صورة للدرس">
+              </div>
+              <textarea class="uk-textarea" required [(ngModel)]="subject.discrib" name="subject.discrib" rows="5" placeholder="وصف للدرس"></textarea>
+            <br>
+          </div>
+          <div class="card-footer">
+            <button mat-button color="primary" (click)="editSubject()">تحديث</button>
+            <button mat-button color="accent" (click)="hideModal('#editSubject');showModal('#subject_tbl')">اغلاق</button>
+          </div>
+        </form>
+      </div>
+    </div>
+    <!-- End Edit Subject modal -->
+    <!-- Start Edit Solution Modal -->
+  <div id="editSolution" uk-modal>
+      <div class="uk-modal-dialog uk-modal-body">
+        <h2 class="uk-modal-title"> تعديل موضوع</h2>
+        <form *ngIf="lesson">
+          <div class="card-content">
+            <br>
+              <div class="uk-column-1-2@s">
+                <input class="uk-input" type="text" required [(ngModel)]="solution.solution_link" name="solution.solution_link"  placeholder="رابط الدرس">
+                <input class="uk-input" type="text" required [(ngModel)]="solution.imgUrl" name="solution.imgUrl"  placeholder="رابط صورة للدرس">
+              </div>
+            <br>
+          </div>
+          <div class="card-footer">
+            <button mat-button color="primary" (click)="editSolution()">تحديث</button>
+            <button mat-button color="accent" (click)="hideModal('#editSolution');showModal('#previewSolution')">اغلاق</button>
+          </div>
+        </form>
+      </div>
+    </div>
+    <!-- End Edit Solution modal -->
+</section>
+<!-- End Edits Modals -->
+<!-- Start Deletes modals -->
+<section>
+  <!-- Start delete lesson -->
+  <div id="deleteLesson" uk-modal>
+    <div class="uk-modal-dialog uk-modal-body">
+      <p class="uk-text-center"> هل أنت متأكد من حذف هذا الدرس ؟</p>
+      <br>
+      <div class="uk-column-1-2@s">
+        <button class="uk-button uk-button-danger uk-button-small" (click)="deleteLesson()">حذف</button>
+        <button class="uk-button uk-button-default uk-button-small" (click)="hideModal('#deleteLesson');showModal('#lesson_tbl')">الغاء</button>
+      </div>
+    </div>
+  </div>
+  <!-- End delete lesson -->
+  <!-- Start delete subject -->
+  <div id="deleteSubject" uk-modal>
+      <div class="uk-modal-dialog uk-modal-body">
+        <p class="uk-text-center"> هل أنت متأكد من حذف هذا الموضوع ؟</p>
+        <br>
+        <div class="uk-column-1-2@s">
+          <button class="uk-button uk-button-danger uk-button-small" (click)="deleteSubject()">حذف</button>
+          <button class="uk-button uk-button-default uk-button-small" (click)="hideModal('#deleteSubject');showModal('#subject_tbl')">الغاء</button>
+        </div>
+      </div>
+    </div>
+    <!-- End delete subject -->
+  
+</section>
+<!-- End Delete Modals -->
 <section>
   <div class="uk-column-1-2@s uk-column-1-3@m">
     <!-- Start Add Stage -->
@@ -340,22 +501,22 @@
                     </option>
                   </select>
                 <br>
-                    <select class="uk-select" name="idModule" [(ngModel)]="idModule"  placeholder="اختر المادة">
+                    <select class="uk-select" name="idModule" [(ngModel)]="subject.idModule"  placeholder="اختر المادة">
                       <option *ngFor="let modul of allModules" [value]="modul.idModule">
                         {{modul.module_name}}
                       </option>
                     </select>
               <br>
-                <input class="uk-input" type="text" required [(ngModel)]="subjectTitle" name="subjectTitle" placeholder="عنوان الموضوع ">
+                <input class="uk-input" type="text" required [(ngModel)]="subject.subject_title" name="subjectTitle" placeholder="عنوان الموضوع ">
               <div class="uk-column-1-2@s">
-                <input class="uk-input" type="text" required [(ngModel)]="subjectLink" name="subjectLink" placeholder="رابط الموضوع">
-                <input class="uk-input" type="text" required [(ngModel)]="subjecImg" name="subjecImg" placeholder="رابط صورة للموضوع ">
+                <input class="uk-input" type="text" required [(ngModel)]="subject.subject_link" name="subject_link" placeholder="رابط الموضوع">
+                <input class="uk-input" type="text" required [(ngModel)]="subject.img_url" name="img_url" placeholder="رابط صورة للموضوع ">
               </div>
-              <textarea name="describ" rows="5" required class="uk-textarea" [(ngModel)]="describ" placeholder="وصف الموضوع"></textarea>
+              <textarea name="describ" rows="5" required class="uk-textarea" [(ngModel)]="subject.describ" placeholder="وصف الموضوع"></textarea>
               <br>
             </div>
             <div class="card-footer">
-              <button mat-button color="primary" (click)="addSubject(subjectTitle,subjecImg,subjectLink,describ)">اضافة موضوع</button>
+              <button mat-button color="primary" (click)="addSubject()">اضافة موضوع</button>
             </div>
           </form>
         </div>
@@ -392,22 +553,22 @@
                   </option>
                 </select>
               <br>
-                <select class="uk-select" name="idModule" [(ngModel)]="idModule"  placeholder="اختر المادة">
+                <select class="uk-select" name="idModule" [(ngModel)]="lesson.idModule"  placeholder="اختر المادة">
                   <option *ngFor="let modul of allModules" [value]="modul.idModule">
                     {{modul.module_name}}
                   </option>
                 </select>
             <br>
-              <input class="uk-input" type="text" required [(ngModel)]="lessonTitle" name="lessonTitle" placeholder="عنوان الدرس ">
+              <input class="uk-input" type="text" required [(ngModel)]="lesson.lesson_title" name="lesson_title" placeholder="عنوان الدرس ">
               <div class="uk-column-1-2@s">
-                <input class="uk-input" type="text" required [(ngModel)]="lessonLink" name="lessonLink" placeholder="رابط الدرس">
-                <input class="uk-input" type="text" required [(ngModel)]="limgUrl" name="limgUrl" placeholder="رابط صورة للدرس">
+                <input class="uk-input" type="text" required [(ngModel)]="lesson.lesson_link" name="lesson_link" placeholder="رابط الدرس">
+                <input class="uk-input" type="text" required [(ngModel)]="lesson.imgUrl" name="imgUrl" placeholder="رابط صورة للدرس">
               </div>
-              <textarea class="uk-textarea" required [(ngModel)]="ldiscrib" name="ldiscrib" rows="5" placeholder="وصف للدرس"></textarea>
+              <textarea class="uk-textarea" required [(ngModel)]="lesson.discrib" name="discrib" rows="5" placeholder="وصف للدرس"></textarea>
             <br>
           </div>
           <div class="card-footer">
-            <button mat-button color="primary" (click)="addLesson(idModule,lessonTitle,lessonLink,limgUrl,ldiscrib)">اضافة درس</button>
+            <button mat-button color="primary" (click)="addLesson()">اضافة درس</button>
           </div>
         </form>
       </div>

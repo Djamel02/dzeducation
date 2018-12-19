@@ -21,17 +21,33 @@ export class StatusComponent implements OnInit {
   moduleName: any;
   allModules: any;
   idModule: any;
-  lessonLink: string;
-  lessonTitle: string;
-  subjectTitle: string;
-  subjectLink: string;
   lessons: any;
   id: number;
-  lesson: any;
+  lesson :any;
   subjects: any;
-  constructor(private data:ServiceService,private titleService: Title ) { }
+  subject: any;
+  solution: any;
+  constructor(private data:ServiceService,private titleService: Title ) {
+    this.lesson = {
+      idModule:0,
+      idLesson:0,
+      lesson_title:'',
+      lesson_link:'',
+      imgUrl:'',
+      discrib:''
+    };
+    this.subject = {
+      idModule:0,
+      idSubject:0,
+      subject_title:'',
+      subject_link:'',
+      img_url:'',
+      discrib:''
+    }
+   }
 
   ngOnInit() {
+    
     this.getstages();
   }
 
@@ -130,33 +146,76 @@ export class StatusComponent implements OnInit {
   getSubjects(id){
     this.data.getSubjects(id).subscribe(res =>{
       this.subjects = res.json().data
-      console.log(this.subjects)
+    })
+  }
+  //Get Subject By id
+  getSubjectById(id){
+    this.data.getSubjectById(id).subscribe(res =>{
+      this.subject = res.json().data[0];
     })
   }
   //Add Subject
-  addSubject(subtitle,subjecImg,sublink,discrib){
-    let subject = {
-      idmodule:this.idModule,
-      subjectTitle:subtitle,
-      subjectLink:sublink,
-      imgUrl:subjecImg,
-      discrib:discrib
-    }
-    this.data.addSubject(subject).subscribe(res =>{
+  addSubject(){
+    this.data.addSubject(this.subject).subscribe(res =>{
       if(res.json().data.affectedRows > 0){
-        this.successNotification(`تمت اضافة موضوع ${subtitle} بنجاح`)
-        this.subjectTitle ='';
-        this.subjectLink =''
+        this.successNotification(`تمت اضافة موضوع ${this.subject.subject_title} بنجاح`)
+        this.subject.subject_title ='';
+        this.subject.subject_link =''
       }else{
         this.errorNotification();
       }
     })
   }
-
+  //Edit subject
+  editSubject(){
+    this.data.editSubject(this.id,this.subject).subscribe(res =>{
+      if(res.json().data.affectedRows > 0){
+        this.successNotification(` تمت تعديل موضوغ ${this.subject.subject_title} بنجاح`)
+        this.getSubjects(this.idModule)
+        this.hideModal('#editSubject');
+        this.showModal('#subject_tbl')
+      }else{
+        this.errorNotification();
+      }
+    })
+  }
+  deleteSubject(){
+    this.data.deleteSubject(this.id).subscribe(res => {
+      if(res.json().data.affectedRows > 0){
+        this.successNotification(` تم حذف موضوغ بنجاح`)
+        this.getSubjects(this.idModule)
+        this.hideModal('#deleteSubject');
+        this.showModal('#subject_tbl')
+      }else{
+        this.errorNotification();
+      }
+    })
+  }
   /*End Subject works */
   /*Start Solution works */
+  //get solution
+  getSolution(idSubject){
+    this.data.getSolution(idSubject).subscribe(res =>{
+      this.solution = res.json().data[0]
+    })
+  }
   //Add Solution
-  addSolution(){}
+  addSolution(imgUrl,solLink){
+    let solution ={
+      imgUrl:imgUrl,
+      solutionLink:solLink,
+      idSubject:this.id
+    }
+    this.data.addSolution(solution).subscribe(res =>{
+      if(res.json().data.affectedRows > 0){
+        this.successNotification(`تمت اضافة الحل بنجاح`)
+        this.hideModal('#solutionModal')
+        this.showModal('#subject_tbl')
+      }else{
+        this.errorNotification();
+      }
+    })
+  }
   /*End Solution works */
   /*Start Lesson works */
   //Get Lesson
@@ -166,35 +225,50 @@ export class StatusComponent implements OnInit {
     })
   }
   //Get lesson by id
-  getLessonById(){
-    this.data.getLessonById(this.id).subscribe(res =>{
-      this.lesson = res.json().data
-      console.log(this.lesson)
+  getLessonById(id){
+    this.data.getLessonById(id).subscribe(res =>{
+      this.lesson = res.json().data[0]
     })
   }
   //Add lesson
-  addLesson(idModule,lessonTitle,lessonLink,limgUrl,ldiscrib){
-    let lesson = {
-      idModule:this.idModule,
-      lessonTitle:lessonTitle,
-      lessonLink:lessonLink,
-      imgUrl:limgUrl,
-      discrib:ldiscrib
-    }
-    this.data.addLesson(lesson).subscribe(res =>{
+  addLesson(){
+
+    this.data.addLesson(this.lesson).subscribe(res =>{
       if(res.json().data.affectedRows > 0){
-        this.successNotification(`تمت اضافة درس ${lessonTitle} بنجاح`)
-        this.lessonTitle ='';
-        this.lessonLink ='';
-        this.getLessons('');
+        this.successNotification(`تمت اضافة درس ${this.lesson.lesson_title} بنجاح`)
+        this.lesson.lesson_title ='';
+        this.lesson.lesson_link ='';
       }else{
         this.errorNotification();
       }
     })
-    
+  }
+  //Edit Lesson
+  editLesson(){
+      this.data.editLesson(this.id,this.lesson).subscribe(res =>{
+      if(res.json().data.affectedRows > 0){
+        this.successNotification(` تمت تعديل درس ${this.lesson.lesson_title} بنجاح`)
+        this.getLessons(this.idModule)
+        this.hideModal('#editLesson');
+        this.showModal('#lesson_tbl')
+      }else{
+        this.errorNotification();
+      }
+    })
   }
   //Delete Lesson
-  deleteLesson(id){}
+  deleteLesson(){
+    this.data.deleteLesson(this.id).subscribe(res =>{
+      if(res.json().data.affectedRows > 0){
+        this.successNotification(` تمت حذف الدرس بنجاح`)
+        this.getLessons(this.idModule)
+        this.hideModal('#deleteLesson');
+        this.showModal('#lesson_tbl')
+      }else{
+        this.errorNotification();
+      }
+    })
+  }
   /*End Lesson works */
 
   //successnotification
