@@ -1,0 +1,22 @@
+mat-toolbar{
+    width: 100%;
+    background: #1f558a;
+    display: flex;
+    mat-toolbar-row  {
+        button{
+            color: #ffffff;
+            padding: 1px 5px
+        }
+        button :hover{
+            background: #112f4d !important
+        }
+    }
+    
+}
+.uk-h1, .uk-h2, .uk-h3, .uk-h4, .uk-h5, .uk-h6, h1, h2, h3, h4, h5, h6 {
+    font-family: georgia, sans-serif;
+    font-size: 20px;
+}
+.mat-menu-item:hover{
+    text-decoration: none
+}

@@ -28,8 +28,8 @@
             ],
             "styles": [
               "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
-              "src/styles.scss",
-              "./node_modules/uikit/dist/css/uikit-rtl.min.css"
+              "./node_modules/uikit/dist/css/uikit-rtl.min.css",
+              "src/styles.scss"
             ],
             "scripts": [
               "./node_modules/uikit/dist/js/uikit.min.js",

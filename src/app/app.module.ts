@@ -18,6 +18,10 @@ import { StaticsComponent } from './admin/dashboard/statics/statics.component';
 import { StatusComponent } from './admin/dashboard/status/status.component';
 import { HttpModule } from '@angular/http';
 import { DshComponent } from './admin/dashboard/dsh/dsh.component';
+import { HomeComponent } from './home/home/home.component';
+import { NavbarComponent } from './home/navbar/navbar.component';
+import { FooterComponent } from './home/footer/footer.component';
+import { WorksComponent } from './home/works/works.component';
 
 const routes:Routes = [
   {path:'admin',children:[
@@ -30,6 +34,10 @@ const routes:Routes = [
       {path:'status', component:StatusComponent}
     ]},
     {path:'',component:LoginComponent}
+  ]},
+  {path:'',component:WorksComponent,children:[
+    {path:'home',component:HomeComponent},
+    {path:'',component:HomeComponent}
   ]}
 ]
 @NgModule({
@@ -44,7 +52,11 @@ const routes:Routes = [
     ArticlesComponent,
     StaticsComponent,
     StatusComponent,
-    DshComponent
+    DshComponent,
+    HomeComponent,
+    NavbarComponent,
+    FooterComponent,
+    WorksComponent
   ],
   imports: [
     BrowserModule,

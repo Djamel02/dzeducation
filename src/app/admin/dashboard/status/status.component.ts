@@ -216,6 +216,19 @@ export class StatusComponent implements OnInit {
       }
     })
   }
+  //Edit Solution
+  editSolution(){
+    this.data.editSolution(this.id,this.solution).subscribe(res =>{
+      if(res.json().data.affectedRows > 0){
+        this.successNotification(`تم تعديل الحل بنجاح`)
+        this.getSolution(this.id)
+        this.hideModal('#editSolution')
+        this.showModal('#previewSolution')
+      }else{
+        this.errorNotification();
+      }
+    })
+  }
   /*End Solution works */
   /*Start Lesson works */
   //Get Lesson

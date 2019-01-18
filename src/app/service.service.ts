@@ -160,6 +160,10 @@ export class ServiceService {
     addSolution(solution){
       return this._http.post('/api/solution',solution)
     }
+    //Edit solution
+    editSolution(idSubject,solution){
+      return this._http.patch('/api/solution/'+idSubject,solution)
+    }
   /* End Solutions Works */
   /*Start Lessons works */
     //get Lessons

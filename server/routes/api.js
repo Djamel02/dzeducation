@@ -149,6 +149,11 @@ router.post('/solution',(req,res) =>{
     let solution = req.body;
     db.createSolution(solution.solutionLink,solution.imgUrl,solution.idSubject,res)
 })
+//Edit Solution
+router.patch('/solution/:id',(req,res) =>{
+    let solution = req.body
+    db.updateSolution(req.params.id,solution.solution_link,solution.imgUrl,res)
+})
 //get lessons
 router.get('/lessons/:id',(req,res) =>{
     db.getLessons(req.params.id,res)    

@@ -5,7 +5,7 @@
           <div class="card-header">
               <button href="#toggle-animation" class="uk-button uk-button-default" type="button" uk-toggle="target: #lang; animation: uk-animation-fade">اضافة لغة</button>
           </div>
-          <div id="lang">
+          <div id="lang" aria-hidden="true" hidden="">
             <form>
               <div class="card-content">
                 <mat-form-field>
@@ -25,7 +25,7 @@
           <div class="card-header">
               <button href="#toggle-animation" class="uk-button uk-button-default" type="button" uk-toggle="target: #video; animation: uk-animation-fade">اضافة فيديو</button>
           </div>
-          <div id="video">
+          <div id="video" aria-hidden="true" hidden="">
             <form>
               <div class="card-content">
                 <mat-form-field>
@@ -57,7 +57,7 @@
           <div class="card-header">
             <button href="#toggle-animation" class="uk-button uk-button-default" type="button" uk-toggle="target: #set; animation: uk-animation-fade">اضافة خطوات تعلم</button>
           </div>
-          <div id="set">
+          <div id="set" aria-hidden="true" hidden="">
             <div class="card-content">
               <mat-form-field>
                 <mat-select name="langv" [(ngModel)]="langv" placeholder="اختر اللغة">

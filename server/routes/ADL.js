@@ -336,6 +336,17 @@ module.exports = class ADL {
             }
         })
     }
+    //Update solution
+    updateSolution(idSubject,solution_link,imgUrl,res){
+        return this.connection.query('UPDATE solutions SET  solution_link = ? , imgUrl = ?  WHERE idSubject = ?',[solution_link,imgUrl,idSubject],(err,result) =>{
+            try {
+                this.response.data = result
+                res.json(this.response)
+            }catch(err) {
+                this.sendError(err,res)
+            }
+        })
+    }
     /*End Solutions Works */
     /*Start lessons works */
     //Get Lessons

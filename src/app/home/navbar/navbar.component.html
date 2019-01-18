@@ -1,0 +1,33 @@
+<mat-toolbar >
+    <mat-toolbar-row>
+      <button routerLink="/home" mat-button title="home">
+        <mat-icon>home</mat-icon> 
+        الرئيسية
+      </button>
+      <button mat-button [matMenuTriggerFor]="stages" title="stages">
+        <mat-icon>view_stream</mat-icon>
+        الأطوار <i class="material-icons">keyboard_arrow_down </i>
+      </button>
+      <button routerLink="/" mat-button title="languages">
+        <mat-icon>school</mat-icon> 
+        تعلم اللغات
+      </button>
+      <button routerLink="/" mat-button title="about">
+        <mat-icon>info</mat-icon> 
+        عن الموقع
+      </button>
+    <!-- Stages -->
+    <mat-menu #stages="matMenu">
+      <a routerLink="./" mat-menu-item>
+        <span>الابتدائي</span>
+      </a>
+      <a routerLink="./" mat-menu-item >
+        <span>المتوسط</span>
+      </a>
+      <a routerLink="./" mat-menu-item >
+        <span>الثانوي</span>
+      </a>
+    </mat-menu>
+  </mat-toolbar-row >
+  </mat-toolbar>
+  <!-- onclick='window.open("https://www.facebook.com/share.php?u="+encodeURIComponent("https://www.jelfa-edu.com/"), "", "width=530, height=450, left=200, top=200, fullscreen=no ")' -->
